@@ -1,4 +1,5 @@
 import 'dart:io' show Platform;
+import 'dart:math';
 
 
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -14,7 +15,9 @@ import '../../utills/CustomColor.dart';
 import '../../utills/FontSize.dart';
 import '../../utills/SharedPreferencesHelper.dart';
 import '../../utills/utils.dart';
+import '../widget/CustomWidget.dart';
 import '../widget/LoaderWidget.dart';
+import 'ComponentActivity.dart';
 
 
 
@@ -46,8 +49,27 @@ class _LoginActivityState extends State<LoginActivity> {
   String deviceToken = '';
   String base_url = '';
   final textFieldFocusNode = FocusNode();
-  bool _obscured = false;
-
+  final captuatextFieldFocusNode = FocusNode();
+  bool _obscured = true;
+  String randomString = "";
+  bool isVerified = false;
+  TextEditingController captcha_controller = TextEditingController();
+// Logic for creating Captcha
+  void buildCaptcha() {
+    // Letter from which we want to generate the captach
+    // We have taken A to Z all small nand
+    // caps letters along with numbers
+    // You can change this as per your convience
+    const letters ="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+    const length = 6;
+    // Length of Captcha to be generated
+    final random = Random();
+    // Select random letters from above list
+    randomString = String.fromCharCodes(List.generate(
+        length, (index) => letters.codeUnitAt(random.nextInt(letters.length))));
+    setState(() {});
+    print("the random string is $randomString");
+  }
   @override
   void initState() {
     super.initState();
@@ -70,6 +92,7 @@ class _LoginActivityState extends State<LoginActivity> {
     });
     getsharePref();
     getToken();
+    buildCaptcha();
     // getDeviceId();
   }
 
@@ -84,9 +107,9 @@ class _LoginActivityState extends State<LoginActivity> {
   }
 
   Future<void> getsharePref() async {
-    String? _baseUrl = await SharedPreferencesHelper.getBaseURL();
+    // String? _baseUrl = await SharedPreferencesHelper.getBaseURL();
     setState(() {
-      base_url = _baseUrl ?? "";
+      // base_url = _baseUrl ?? "";
     });
   }
 
@@ -135,9 +158,9 @@ class _LoginActivityState extends State<LoginActivity> {
           var UserType = viewModelListner.loginMain.data.response.r_type;
           var Name = viewModelListner.loginMain.data.response.r_username;
 
-          SharedPreferencesHelper.saveAuthKey(authkey!);
-          SharedPreferencesHelper.saveUserType(UserType!);
-          SharedPreferencesHelper.savePreferance('Name', Name!);
+          // SharedPreferencesHelper.saveAuthKey(authkey!);
+          // SharedPreferencesHelper.saveUserType(UserType!);
+          // SharedPreferencesHelper.savePreferance('Name', Name!);
           if (mounted) {
             // Navigator.pushReplacement(
             //   context,
@@ -215,14 +238,22 @@ class _LoginActivityState extends State<LoginActivity> {
             child:  SingleChildScrollView(
               child: Column(
                 children: [
-                  Container(
-                    width: double.infinity,
-                    height: 50,
-                    margin: EdgeInsets.only(bottom: 0,top: 80),
+                  Visibility(
+                    visible: false,
+                    child: Container(
+                      width: double.infinity,
 
-                    child: Image.asset(
-                        'assets/images/ic_logo.webp'), // Replace with your image path
+                      margin: EdgeInsets.only(bottom: 0,top: 80),
+
+                      child: Image.asset(
+                        "assets/images/ic_logo.webp",
+                        height: 100,
+                        width: 100,
+                        // fit: BoxFit.fitCenter,
+                      ), // Replace with your image path
+                    ),
                   ),
+                  SizedBox(height: 100,width: 100,),
                   Stack(children: [
                     Align(
                       alignment: AlignmentDirectional.topCenter, // <-- SEE HERE
@@ -251,47 +282,47 @@ class _LoginActivityState extends State<LoginActivity> {
                           ),
                           child:  Column(children: [
                             SizedBox(height: 320, width: 100),
-                            Visibility(
-                              visible: false,
-                              child: InkWell(
-                                onTap: () {
+                            InkWell(
+                              onTap: (){
+                                Navigator.pushReplacement(
+                                    context, MaterialPageRoute(builder: (context) => UserTypeActivity()));
 
-                                },
-                                child: Align(
-                                  alignment: Alignment.topRight,
-                                  child: Container(
-                                    width: 140,
-                                    height: 30,
-                                    margin: EdgeInsets.only(top: 20, right: 20),
-                                    decoration: BoxDecoration(
-                                      gradient: const LinearGradient(
-                                        begin: Alignment.topCenter,
-                                        end: Alignment.bottomCenter,
-                                        colors: [
-                                          CustomColor.pink_light,
-                                          // Replace with your desired colors
-                                          CustomColor.pink_dark,
-                                          // Replace with your desired colors
-                                        ],
-                                      ),
-                                      borderRadius: BorderRadius.circular(10),
+                              },
+                              child: Align(
+                                alignment: Alignment.topRight,
+                                child: Container(
+                                  width: 140,
+                                  height: 30,
+                                  margin: EdgeInsets.only(top: 20, right: 20),
+                                  decoration: BoxDecoration(
+                                    gradient: const LinearGradient(
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.bottomCenter,
+                                      colors: [
+                                        CustomColor.theme_color1,
+                                        // Replace with your desired colors
+                                        CustomColor.theme_color1,
+                                        // Replace with your desired colors
+                                      ],
                                     ),
-                                    child: Center(
-                                      child: Text(
-                                        'Change Code',
-                                        style: TextStyle(
-                                          fontFamily: 'Nunito Regular',
-                                          color: Colors.white,
-                                          fontSize: FontSize.sp_18,
-                                        ),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      'Change Login',
+                                      style: TextStyle(
+                                        fontFamily: 'Nunito Regular',
+                                        color: Colors.white,
+                                        fontSize: FontSize.sp_18,
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 30, width: 100),
 
+                            const SizedBox(height: 30, width: 100),
+                            CustomWidget(),
                           ])),
                     ),
                     Align(
@@ -310,10 +341,10 @@ class _LoginActivityState extends State<LoginActivity> {
                             child: Column(
                               children: [
                                 Container(
-                                  height: 230.0,
-                                  width: 230.0,
+                                  height: 100.0,
+                                  width: 100.0,
                                   child: Image.asset(
-                                      'assets/images/login_image.png'),
+                                      'assets/images/ic_logo.webp'),
                                 ),
                                 Text(
                                   "${widget.LoginTitle} " "Login",
@@ -342,7 +373,7 @@ class _LoginActivityState extends State<LoginActivity> {
                                     child: Row(
                                       children: [
                                         Image.asset(
-                                          "assets/images/user.png", height: 30.0,
+                                          "assets/images/user.webp", height: 30.0,
                                           width: 30.0,
                                           // fit: BoxFit.fitCenter,
                                         ),
@@ -392,7 +423,7 @@ class _LoginActivityState extends State<LoginActivity> {
                                         children: [
                                           Container(
                                               child: Image.asset(
-                                                "assets/images/padlock.png",
+                                                "assets/images/padlock.webp",
                                                 height: 30.0,
                                                 width: 30.0,
                                                 // fit: BoxFit.fitCenter,
@@ -433,15 +464,120 @@ class _LoginActivityState extends State<LoginActivity> {
                                                     child: Icon(
                                                       color: CustomColor
                                                           .PrimaryBlack,
-                                                      _obscured
-                                                          ? Icons
-                                                          .visibility_rounded
-                                                          : Icons
-                                                          .visibility_off_rounded,
+                                                      _obscured?Icons.visibility_off_rounded: Icons.visibility_rounded ,
                                                       size: 24,
                                                     ),
                                                   ),
                                                 ),
+                                              ),
+                                            )),
+                                          ),
+                                        ],
+                                      ),
+                                    )),
+                                SizedBox(height: 5),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    // Shown Captcha value to user
+                                    Container(
+                                         width: 100,
+                                        margin: EdgeInsets.only(left: 10,right: 10),
+                                        padding: const EdgeInsets.all(12),
+
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            begin: Alignment.topRight,
+                                            end: Alignment.bottomLeft,
+                                            stops: [
+                                              0.1,
+                                              0.4,
+                                              0.6,
+
+                                            ],
+                                            colors: [
+
+                                              Colors.red,
+                                              Colors.indigo,
+                                              Colors.teal,
+                                            ],
+                                          ),
+
+                                          border: Border.all(
+                                              color: CustomColor.gray_dark, width: 1.0),
+                                          borderRadius:
+                                          BorderRadius.all(Radius.circular(8.0)),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            randomString,
+                                            style:  TextStyle(
+                                                fontSize: FontSize.sp_13,
+                                                letterSpacing: 1.0,
+                                                color:CustomColor.white,
+                                                fontStyle:FontStyle.italic,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        )),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    // Regenerate captcha value
+                                    IconButton(
+                                        onPressed: () {
+                                          buildCaptcha();
+                                        },
+                                        icon: const Icon(Icons.refresh,color: Colors.black)),
+                                  ],
+                                ),
+                                SizedBox(height: 5),
+                                Container(
+                                    margin: EdgeInsets.only(left: 10,right: 10),
+                                    height: 45,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      border: Border.all(
+                                          color: CustomColor.gray_dark, width: 1.0),
+                                      borderRadius:
+                                      BorderRadius.all(Radius.circular(8.0)),
+                                    ),
+                                    constraints: BoxConstraints(),
+                                    child: Container(
+                                      margin: const EdgeInsets.symmetric(
+                                        horizontal: 20,
+
+                                      ),
+                                      child: Row(
+                                        children: [
+
+                                          Expanded(
+                                            child: AutofillGroup(
+                                                child:TextField(
+                                              controller: captcha_controller,
+                                              keyboardType:
+                                              TextInputType.text,
+                                              obscureText: _obscured,
+                                              focusNode: captuatextFieldFocusNode,
+
+                                              decoration: InputDecoration(
+                                                floatingLabelBehavior:
+                                                FloatingLabelBehavior.never,
+                                                //Hides label on focus or if filled
+                                                labelText: "Captcha",
+                                                filled: true,
+                                                // Needed for adding a fill color
+                                                fillColor: CustomColor.white,
+                                                isDense: true,
+                                                // Reduces height a bit
+                                                border: OutlineInputBorder(
+                                                  borderSide: BorderSide
+                                                      .none, // No border
+                                                  borderRadius:
+                                                  BorderRadius.circular(
+                                                      12), // Apply corner radius
+                                                ),
+
+
                                               ),
                                             )),
                                           ),
@@ -487,15 +623,37 @@ class _LoginActivityState extends State<LoginActivity> {
 
                                       return;
                                     }
+
+                                    if (captcha_controller.text == null || captcha_controller.text.isEmpty) {
+                                      Utils.flushBarErrorMessage(
+                                          AppString.enter_captcha,
+                                          context,
+                                          flushBarKey);
+
+                                      return;
+                                    }
+                                    isVerified = captcha_controller.text == randomString;
+                                    setState(() {});
+                                    if (!isVerified)
+                                      {
+                                        Utils.flushBarErrorMessage(
+                                            AppString.enter_captcha_valid,
+                                            context,
+                                            flushBarKey);
+
+                                        return;
+                                      }
+
+
                                     TextInput.finishAutofillContext();
-                                    viewModelMain.userLoginApi(
-                                        base_url,
-                                        user_name,
-                                        password,
-                                        deviceid,
-                                        devicetype,
-                                        widget.userType,
-                                        deviceToken);
+                                    // viewModelMain.userLoginApi(
+                                    //     base_url,
+                                    //     user_name,
+                                    //     password,
+                                    //     deviceid,
+                                    //     devicetype,
+                                    //     widget.userType,
+                                    //     deviceToken);
                                   },
                                   child: Align(
                                     alignment: Alignment.center,
@@ -508,9 +666,9 @@ class _LoginActivityState extends State<LoginActivity> {
                                           begin: Alignment.topCenter,
                                           end: Alignment.bottomCenter,
                                           colors: [
-                                            CustomColor.orange_light,
+                                            CustomColor.theme_color1,
                                             // Replace with your desired colors
-                                            CustomColor.orange_dark,
+                                            CustomColor.theme_color1,
                                             // Replace with your desired colors
                                           ],
                                         ),
@@ -518,7 +676,7 @@ class _LoginActivityState extends State<LoginActivity> {
                                       ),
                                       child: Center(
                                         child: Text(
-                                          'Login',
+                                          'Sign In',
                                           style: TextStyle(
                                             fontFamily: 'Nunito Regular',
                                             color: Colors.white,

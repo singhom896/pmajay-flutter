@@ -15,7 +15,9 @@ class AppString
   static String  enter_user_pass ='Enter Password';
   static String  exam_quesNo_args ='This exam has @QuesNo questions.';
 
+  static String  enter_captcha ='Please enter Captcha value you see on screen';
 
-  static String  copyright ='This app is designed, developed, hosted and maintained by National \n Informatics Centre,Department of Social Justice and Empowerment,\n Ministry of Social Justice and Empowerment,\n Government of India. \n Help-desk Email: support.pmagy-msje@gov.in';
+  static String  enter_captcha_valid ='Please enter valid Captcha value you see on screen';
+  static String  copyright ='Designed, & Developed by \n Informatics Centre,Department of Social Justice and Empowerment,\n Ministry of Social Justice and Empowerment,\n Government of India. \n Help-desk Email: support.pmagy-msje@gov.in';
 
 }

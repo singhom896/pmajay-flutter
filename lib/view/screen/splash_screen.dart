@@ -8,7 +8,7 @@ import '../../utills/FontSize.dart';
 import '../../utills/SharedPreferencesHelper.dart';
 import 'DashBoard.dart';
 import 'LoginActivity.dart';
-import 'UserTypeActivity.dart';
+import 'ComponentActivity.dart';
 
 
 class splash_screen extends StatefulWidget {
@@ -29,7 +29,7 @@ class _splash_screenState extends State<splash_screen> {
   }
 
   Future<void> initview() async {
-    Future<void>.delayed(Duration(seconds: 2), () async {
+    Future<void>.delayed(Duration(seconds: 3), () async {
 
       String? _authkey = await SharedPreferencesHelper.getAuthKey();
 
@@ -55,6 +55,42 @@ class _splash_screenState extends State<splash_screen> {
   {
     return Stack(
         children: <Widget>[
+
+
+          Positioned(
+            top: 120,
+            bottom: null,
+            left: 1,
+            right: 1,
+            child: Center(
+              child: Container(
+                child: Column(
+
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      color:CustomColor.white,
+                      'assets/images/ic_ashokstambh.webp',
+                      height: 100,
+                      width: 100,
+                    ),
+                    SizedBox(height: 10,),
+                    Text(
+                        textAlign:TextAlign.center,
+                      'Ministry of Social Justice and Empowerment \n Government of India.'.toUpperCase(),
+                      style: TextStyle(
+                          fontFamily: 'Nunito Regular',
+                          color:CustomColor.white,
+                          fontSize: FontSize.sp_14,
+                          fontWeight:FontWeight.bold
+                      ),
+                    ),
+
+
+                  ],),
+              ),
+            ),
+          ),
 
           Positioned(
             top: null,
@@ -89,32 +125,55 @@ class _splash_screenState extends State<splash_screen> {
             ),
           ),
           Positioned(
-            top: null,
-            bottom: 30,
-            left: 50,
+
+            bottom: 50,
             right: 10,
-            child: Text(
-              textAlign:TextAlign.center,
-              AppString.copyright,
-              style: TextStyle(
-                  fontFamily: 'Nunito Regular',
-                  color:CustomColor.white,
-                  fontSize: FontSize.sp_10,
-                  fontWeight:FontWeight.bold
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  textAlign:TextAlign.right,
+                  'Designed, & Developed by',
+                  style: TextStyle(
+                    fontFamily: 'Nunito Regular',
+                    color: CustomColor.white,
+                    fontSize: FontSize.sp_10,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Image.asset(
+                  'assets/images/nic_logo.webp',
+                  height: 30,
+                  width: 100,
+                ),
+                Text(
+                  textAlign:TextAlign.right,
+                  'Department of Social Justice and Empowerment',
+                  style: TextStyle(
+                    fontFamily: 'Nunito Regular',
+                    color: CustomColor.white,
+                    fontSize: FontSize.sp_10,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  textAlign:TextAlign.right,
+                  'Government of India',
+                  style: TextStyle(
+                    fontFamily: 'Nunito Regular',
+                    color: CustomColor.white,
+                    fontSize: FontSize.sp_10,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
           ),
-          Positioned(
-            top: null,
-            bottom: 0,
-            left: 0,
-            right: null,
-            child: Image.asset(
-              'assets/images/nic_logo.webp',
-              height: 100,
-              width: 100,
-            ),
-          ),
+
+
+
+
+
 
 
         ]
