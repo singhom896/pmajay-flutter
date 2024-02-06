@@ -52,8 +52,8 @@ class MyApp extends StatelessWidget {
         ],
         child: MaterialApp(
           theme: ThemeData(
-            primaryColor: CustomColor.purple_loght,
-            primaryColorDark: CustomColor.purple_dark,// Define the primary color
+            primaryColor: CustomColor.white,
+            primaryColorDark: CustomColor.white,// Define the primary color
             iconTheme: IconThemeData(color: Colors.white),
           ),
 

@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pmajay/view/screen/DashBoard.dart';
 
 import 'package:provider/provider.dart';
 
@@ -600,6 +601,13 @@ class _LoginActivityState extends State<LoginActivity> {
                                     )),
                                 InkWell(
                                   onTap: () {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              DashBoard()),
+                                    );
+                                    return;
                                     String user_name =
                                     _userNameTextCont.text.trim();
                                     String password =
@@ -646,6 +654,7 @@ class _LoginActivityState extends State<LoginActivity> {
 
 
                                     TextInput.finishAutofillContext();
+
                                     // viewModelMain.userLoginApi(
                                     //     base_url,
                                     //     user_name,

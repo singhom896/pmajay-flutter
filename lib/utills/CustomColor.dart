@@ -61,6 +61,10 @@ class CustomColor
 
   //Pm-ajay
   static const title_font_color =   Color(0xff3f4b09);
-  static const theme_color1 =   Color(0xff102167);
-  static const theme_color2 =   Color(0xcf102167);
+  static const theme_color1 =   Color(0xff2f89c8);
+  static const theme_color2 =  Color(0xdf2f89c8);
+  static const drawer_bg =   Color(0xffeeba28);
+  static const drawer_header_bg =   Color(0xffa7b0b0);
+
+
 }

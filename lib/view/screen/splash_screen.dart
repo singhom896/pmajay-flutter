@@ -1,13 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:pmajay/utills/AppString.dart';
 import 'package:pmajay/utills/CustomColor.dart';
-
 import '../../utills/FontSize.dart';
 import '../../utills/SharedPreferencesHelper.dart';
 import 'DashBoard.dart';
-import 'LoginActivity.dart';
 import 'ComponentActivity.dart';
 
 
@@ -31,23 +28,26 @@ class _splash_screenState extends State<splash_screen> {
   Future<void> initview() async {
     Future<void>.delayed(Duration(seconds: 3), () async {
 
-      String? _authkey = await SharedPreferencesHelper.getAuthKey();
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => DashBoard()));
 
-      if (_authkey != null && _authkey != "")
-      {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => DashBoard()));
-      } else
-      {
-        // Navigator.pushReplacement(
-        //     context, MaterialPageRoute(builder: (context) => LoginActivity(userType: '', LoginTitle: '',)));
-        //
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => UserTypeActivity()));
-
-
-
-      }
+      // String? _authkey = await SharedPreferencesHelper.getAuthKey();
+      //
+      // if (_authkey != null && _authkey != "")
+      // {
+      //   Navigator.pushReplacement(
+      //       context, MaterialPageRoute(builder: (context) => DashBoard()));
+      // } else
+      // {
+      //   // Navigator.pushReplacement(
+      //   //     context, MaterialPageRoute(builder: (context) => LoginActivity(userType: '', LoginTitle: '',)));
+      //   //
+      //   Navigator.pushReplacement(
+      //       context, MaterialPageRoute(builder: (context) => UserTypeActivity()));
+      //
+      //
+      //
+      // }
     });
   }
 
