@@ -15,6 +15,7 @@ class AppString
   static String  enter_captcha_valid ='Please enter valid Captcha value you see on screen';
   static String  copyright ='Designed, & Developed by \n Informatics Centre,Department of Social Justice and Empowerment,\n Ministry of Social Justice and Empowerment,\n Government of India. \n Help-desk Email: support.pmagy-msje@gov.in';
   static String  sign_out ='Sign out';
+
   static String  nodel_officer_des ='Nodel Officer';
   static String  nodel_office ='South West(Delhi)';
   static String  title_dashboard ='DashBoard';
@@ -59,4 +60,5 @@ class AppString
   static String  title_village_verification ='Village Verification';
   static String  title_contact_us ='Contact Us';
   static String  title_site_map ='Site Map';
+  static String  title_assessment_format_i ='Need Assessment Format – I: Village Level Data';
 }

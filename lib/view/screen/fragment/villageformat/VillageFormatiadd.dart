@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:pmajay/utills/AppString.dart';
 
 import '../../../../demoview/DropDownFormField.dart';
-import '../../../../demoview/genBill.dart';
+import '../../../widget/DynamicWidgets.dart';
 import '../../../../utills/CustomColor.dart';
 import '../../../../utills/FontSize.dart';
 import '../../../widget/ExpandableTextWidget.dart';
-
+import '../../../../utills/CustomWidget.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -70,7 +70,7 @@ class _village_format_i_addState extends State<VillageFormatiadd> {
     _myActivity = '';
     _myActivityResult = '';
     clickevent = false;
-
+    addDynamic();
   }
 
   late bool clickevent;
@@ -89,15 +89,45 @@ class _village_format_i_addState extends State<VillageFormatiadd> {
 
   List<String>Product = [];
   List<dynamicWidget> dynamicList = [];
+  Widget dividerLine() {
+    return Container(
+      margin: const EdgeInsets.only(left: 3, right: 3),
+      child: const Divider(
+        color: Colors.grey,
+        thickness: 0.5,
+      ),
+    );
+  }
+
+  Future<bool> _onBackPressed(BuildContext context) async {
+    Navigator.pop(context, true);
+    return true; // Example: Always allow back navigation
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: AppString.app_name,
+
       home: Scaffold(
-        appBar: AppBar(
-          title: Text(AppString.app_name),
-        ),
+          appBar: AppBar(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                bottom: Radius.circular(0),
+              ),
+            ),
+            title: Align(
+                alignment: Alignment.topLeft, child: Text(AppString.title_assessment_format_i,
+                style: TextStyle(color: Colors.white))),
+            backgroundColor: CustomColor.theme_color1,
+            elevation: 2.0,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back,color: Colors.white,),
+              tooltip: 'Menu Icon',
+              onPressed: () {
+                _onBackPressed(context);
+              },
+            ),
+          ),
         body: Padding(
             padding: EdgeInsets.only(left: 10, right: 10,),
             child: SingleChildScrollView(
@@ -601,15 +631,15 @@ class _village_format_i_addState extends State<VillageFormatiadd> {
                                       ),
                                       child: TextFormField(
                                         decoration: const InputDecoration(
-                                          hintText: 'From Date',
-                                          labelText: 'From Date',
+                                          hintText: 'Latitude',
+                                          labelText: 'Latitude',
                                           contentPadding: EdgeInsets.symmetric(
                                               vertical: 5,
                                               horizontal: 5), // Adjust text padding
                                         ),
                                         validator: (value) {
                                           if (value!.isEmpty) {
-                                            return 'From Date';
+                                            return 'Latitude';
                                           }
                                           return null;
                                         },
@@ -635,15 +665,15 @@ class _village_format_i_addState extends State<VillageFormatiadd> {
                                       ),
                                       child: TextFormField(
                                         decoration: const InputDecoration(
-                                          hintText: 'To Date',
-                                          labelText: 'To Date',
+                                          hintText: 'Longitude',
+                                          labelText: 'Longitude',
                                           contentPadding: EdgeInsets.symmetric(
                                               vertical: 5,
                                               horizontal: 5), // Adjust text padding
                                         ),
                                         validator: (value) {
                                           if (value!.isEmpty) {
-                                            return 'To Date';
+                                            return 'Longitude';
                                           }
                                           return null;
                                         },
@@ -657,115 +687,7 @@ class _village_format_i_addState extends State<VillageFormatiadd> {
                         )
 
                       ),
-                      Container(
-                          width: MediaQuery.of(context).size.width,
-                          margin: EdgeInsets.only(top: 10.0),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(color: CustomColor.black_light, width: 1.0),
-                            borderRadius:
-                            BorderRadius.all(Radius.circular(8.0)),
-                          ),
-                          child:Column(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.all(5.0),
-                                width: MediaQuery.of(context).size.width,
-                                decoration: BoxDecoration(
-                                  color: CustomColor.theme_color1,
 
-                                  borderRadius: const BorderRadius.only(
-                                      topRight: Radius.circular(5.0),
-                                      topLeft: Radius.circular(5.0),
-                                      bottomLeft: Radius.circular(5.0),
-                                      bottomRight: Radius.circular(5.0)),
-                                ),
-                                child:ExpandableTextWidget(
-                                  text: '3. Details of Village PMAGY Convergence Committee (Minimum 5 members should be in Village Level Convergence Committee (VLCC)) *',
-                                  textStyle: TextStyle(
-                                      fontSize: 18.00, color: CustomColor.white),
-                                  maxLines: 4,
-                                ), ),
-
-                              Container(
-                                padding: EdgeInsets.only(left: 5,right: 5,bottom: 5),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      flex: 1,
-                                      child: Container(
-                                        margin: EdgeInsets.only(top: 5),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white, // Background color
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.green.withOpacity(0.5),
-                                              // Elevation color
-                                              spreadRadius: 1,
-                                              blurRadius: 1,
-                                              offset: Offset(
-                                                  0, 1), // changes position of shadow
-                                            ),
-                                          ],
-                                        ),
-                                        child: TextFormField(
-                                          decoration: const InputDecoration(
-                                            hintText: 'From Date',
-                                            labelText: 'From Date',
-                                            contentPadding: EdgeInsets.symmetric(
-                                                vertical: 5,
-                                                horizontal: 5), // Adjust text padding
-                                          ),
-                                          validator: (value) {
-                                            if (value!.isEmpty) {
-                                              return 'From Date';
-                                            }
-                                            return null;
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: 1,
-                                      child: Container(
-                                        margin: EdgeInsets.only(top: 5),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white, // Background color
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.green.withOpacity(0.5),
-                                              // Elevation color
-                                              spreadRadius: 1,
-                                              blurRadius: 1,
-                                              offset: Offset(
-                                                  0, 1), // changes position of shadow
-                                            ),
-                                          ],
-                                        ),
-                                        child: TextFormField(
-                                          decoration: const InputDecoration(
-                                            hintText: 'To Date',
-                                            labelText: 'To Date',
-                                            contentPadding: EdgeInsets.symmetric(
-                                                vertical: 5,
-                                                horizontal: 5), // Adjust text padding
-                                          ),
-                                          validator: (value) {
-                                            if (value!.isEmpty) {
-                                              return 'To Date';
-                                            }
-                                            return null;
-                                          },
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          )
-
-                      ),
                       Container(
                           width: MediaQuery.of(context).size.width,
                           margin: EdgeInsets.only(top: 10.0),
@@ -804,6 +726,7 @@ class _village_format_i_addState extends State<VillageFormatiadd> {
                                   );
                                 },
                               )
+
 
 
                             ],
