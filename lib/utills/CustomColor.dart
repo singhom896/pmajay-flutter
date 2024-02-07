@@ -55,7 +55,7 @@ class CustomColor
 
   static const gray_light =  Color(0xFFA9A9A9);
   static const gray_dark =  Color(0xFF7A7878);
-  static const black_light =  Color(0xFF808080);
+
   static const header_background =   Color(0x61867c7c);
 
 
@@ -65,6 +65,8 @@ class CustomColor
   static const theme_color2 =  Color(0xdf2f89c8);
   static const drawer_bg =   Color(0xffeeba28);
   static const drawer_header_bg =   Color(0xffa7b0b0);
-
+  static const drop_down_bg =   Color(0xfff8f9fa);
+  static const black_dark =  Color(0xFF000000);
+  static const black_light =  Color(0xFF808080);
 
 }
