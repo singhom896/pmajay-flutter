@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pmajay/utills/CustomColor.dart';
 import 'package:pmajay/view/screen/DashBoard.dart';
 import 'package:pmajay/view/screen/SplashScreen.dart';
@@ -17,6 +18,7 @@ final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
 
 Future<void> main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   // Set the background messaging handler early on, as a named top-level function
@@ -43,7 +45,7 @@ Future<void> getToken() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
+    final textTheme = Theme.of(context).textTheme;
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => MainListVM()),
@@ -51,12 +53,18 @@ class MyApp extends StatelessWidget {
 
         ],
         child: MaterialApp(
+          // theme: ThemeData(
+          //   primaryColor: CustomColor.white,
+          //   primaryColorDark: CustomColor.white,// Define the primary color
+          //   iconTheme: IconThemeData(color: Colors.white),
+          // ),
           theme: ThemeData(
-            primaryColor: CustomColor.white,
-            primaryColorDark: CustomColor.white,// Define the primary color
-            iconTheme: IconThemeData(color: Colors.white),
+            colorScheme: ColorScheme.fromSeed(seedColor: CustomColor.white),
+            useMaterial3: true,
+            textTheme: GoogleFonts.latoTextTheme(textTheme).copyWith(
+              bodyMedium: GoogleFonts.roboto(textStyle: textTheme.bodyMedium),
+            ),
           ),
-
           debugShowCheckedModeBanner: false,
           // initialRoute: Routes.initialRoute,
           // routes: Routes.routes,

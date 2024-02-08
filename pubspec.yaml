@@ -94,5 +94,10 @@ flutter:
         - asset: assets/font/nunito_bold.ttf
         - asset: assets/font/nunito_light.ttf
         - asset: assets/font/nunito_regular.ttf
+
+    - family: Calibri
+      fonts:
+        - asset: assets/font/Calibri_Regular.ttf
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

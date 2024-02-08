@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pmajay/utills/CustomColor.dart';
 import '../../utills/CustomWidget.dart';
 import '../../utills/FontSize.dart';
@@ -21,7 +22,7 @@ class _splash_screenState extends State<splash_screen> {
 
   @override
   void initState() {
-     // initview();
+     initview();
     super.initState();
 
   }
@@ -44,7 +45,7 @@ class _splash_screenState extends State<splash_screen> {
         //     context, MaterialPageRoute(builder: (context) => LoginActivity(userType: '', LoginTitle: '',)));
         //
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => UserTypeActivity()));
+            context, MaterialPageRoute(builder: (context) => ComponentActivity()));
 
 
 
@@ -59,14 +60,13 @@ class _splash_screenState extends State<splash_screen> {
 
 
           Positioned(
-            top: 120,
+            top: 100,
             bottom: null,
             left: 1,
             right: 1,
             child: Center(
               child: Container(
                 child: Column(
-
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(
@@ -86,28 +86,10 @@ class _splash_screenState extends State<splash_screen> {
                           fontWeight:FontWeight.bold
                       ),
                     ),
-
-
-                  ],),
-              ),
-            ),
-          ),
-
-          Positioned(
-            top: null,
-            bottom: null,
-            left: null,
-            right: null,
-            child: Center(
-              child: Container(
-                child: Column(
-
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
                     Image.asset(
                       'assets/images/ic_logo.webp',
-                      height: 200,
-                      width: 200,
+                      height: 100,
+                      width: 100,
                     ),
                     SizedBox(height: 10,),
                     Text(
@@ -127,10 +109,12 @@ class _splash_screenState extends State<splash_screen> {
               ),
             ),
           ),
+
+
           Positioned(
 
-            bottom: 30,
-            left: 3,
+            bottom: 5,
+            left: 5,
             child:  Image.asset(
               'assets/images/nic_logo.webp',
               height: 30,
@@ -152,12 +136,20 @@ class _splash_screenState extends State<splash_screen> {
 
   @override
   Widget build(BuildContext context) {
+    // Hide the status bar and the navigation bar
+
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [
+        SystemUiOverlay.top, // Shows Status bar and hides Navigation bar
+      ],
+    );
         return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
             extendBodyBehindAppBar: true, // Allows the body to be behind the AppBar
-            body: Container(
-                 height: double.infinity,
+            body:  Container(
+                height: double.infinity,
                 width: double.infinity,
 
                 decoration: GradientBG(),
