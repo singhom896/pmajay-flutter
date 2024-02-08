@@ -42,10 +42,8 @@ dependencies:
   get_it: ^7.6.4
   provider: ^5.0.0
   http: ^0.13.6
-
   url_launcher: ^6.2.4
   animate_do: ^3.0.0
-
   another_flushbar: ^1.12.29
   flutter_svg: ^1.0.3
   google_fonts: ^4.0.4

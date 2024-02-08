@@ -128,7 +128,7 @@ class _village_format_i_addState extends State<VillageFormatiadd> {
               },
             ),
           ),
-        body: Padding(
+           body: Padding(
             padding: EdgeInsets.only(left: 10, right: 10,),
             child: SingleChildScrollView(
               child: Container(

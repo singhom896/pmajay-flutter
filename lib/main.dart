@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pmajay/utills/CustomColor.dart';
 import 'package:pmajay/view/screen/DashBoard.dart';
-import 'package:pmajay/view/screen/splash_screen.dart';
+import 'package:pmajay/view/screen/SplashScreen.dart';
 import 'package:provider/provider.dart';
 
 import 'firebase/firebase_options.dart';

@@ -61,4 +61,8 @@ class AppString
   static String  title_contact_us ='Contact Us';
   static String  title_site_map ='Site Map';
   static String  title_assessment_format_i ='Need Assessment Format – I: Village Level Data';
+  static String  title_nodal_officer_details ='Details of State Nodal Officer';
+
+
+
 }

@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:pmajay/utills/AppString.dart';
 import 'package:pmajay/utills/CustomColor.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import '../screen/NodelOfficerDetails.dart';
 import '../screen/fragment/villageformat/VillageFormatiadd.dart';
 
 
@@ -378,7 +380,7 @@ class DrawerDesign extends StatelessWidget {
                 onTap: ()
                 {
 
-
+                  launchUrl(Uri.parse('https://www.youtube.com/channel/UCvtZvyOHREh-7qO2q0ULNVw'));
 
                 },
                 child: ListTile(
@@ -427,6 +429,8 @@ class DrawerDesign extends StatelessWidget {
               GestureDetector(
                 onTap: ()
                 {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).push(_createRoute(NodelOfficerDetails()));
 
                 },
                 child: ListTile(

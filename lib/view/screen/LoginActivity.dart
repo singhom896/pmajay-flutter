@@ -16,7 +16,7 @@ import '../../utills/CustomColor.dart';
 import '../../utills/FontSize.dart';
 import '../../utills/SharedPreferencesHelper.dart';
 import '../../utills/utils.dart';
-import '../widget/CustomWidget.dart';
+import '../widget/TermsCondition.dart';
 import '../widget/LoaderWidget.dart';
 import 'ComponentActivity.dart';
 

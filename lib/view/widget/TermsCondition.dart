@@ -27,7 +27,7 @@ class CustomWidget extends StatelessWidget {
     return Center(
         child: InkWell(
           onTap: () {
-            // launchUrl(Uri.parse('https://pmagy.gov.in/new-dashboard/Terms-And-Condition'))
+             launchUrl(Uri.parse('https://pmagy.gov.in/new-dashboard/Terms-And-Condition'));
           }
 
           ,child: RichText(
