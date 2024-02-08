@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:pmajay/utills/CustomColor.dart';
+import '../../utills/CustomWidget.dart';
 import '../../utills/FontSize.dart';
 import '../../utills/SharedPreferencesHelper.dart';
 import 'DashBoard.dart';
@@ -20,7 +21,7 @@ class _splash_screenState extends State<splash_screen> {
 
   @override
   void initState() {
-     initview();
+     // initview();
     super.initState();
 
   }
@@ -69,7 +70,7 @@ class _splash_screenState extends State<splash_screen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(
-                      color:CustomColor.white,
+
                       'assets/images/ic_ashokstambh.webp',
                       height: 100,
                       width: 100,
@@ -77,11 +78,11 @@ class _splash_screenState extends State<splash_screen> {
                     SizedBox(height: 10,),
                     Text(
                         textAlign:TextAlign.center,
-                      'Ministry of Social Justice and Empowerment \n Government of India.'.toUpperCase(),
+                      'Ministry of Social Justice and \n Empowerment \n Government of India.',
                       style: TextStyle(
                           fontFamily: 'Nunito Regular',
-                          color:CustomColor.white,
-                          fontSize: FontSize.sp_14,
+                          color:CustomColor.black_dark,
+                          fontSize: FontSize.sp_18,
                           fontWeight:FontWeight.bold
                       ),
                     ),
@@ -110,8 +111,10 @@ class _splash_screenState extends State<splash_screen> {
                     ),
                     SizedBox(height: 10,),
                     Text(
-                      'Pradhan Mantri Adarsh Gram \n                  Yojana',
+                      textAlign:TextAlign.center,
+                      'Pradhan Mantri Anusuchit\nJaati Abhyuday Yojna\n(PM-AJAY)',
                       style: TextStyle(
+
                           fontFamily: 'Nunito Regular',
                           color:CustomColor.white,
                           fontSize: FontSize.sp_18,
@@ -126,47 +129,13 @@ class _splash_screenState extends State<splash_screen> {
           ),
           Positioned(
 
-            bottom: 50,
-            right: 10,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  textAlign:TextAlign.right,
-                  'Designed, & Developed by',
-                  style: TextStyle(
-                    fontFamily: 'Nunito Regular',
-                    color: CustomColor.white,
-                    fontSize: FontSize.sp_10,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Image.asset(
-                  'assets/images/nic_logo.webp',
-                  height: 30,
-                  width: 100,
-                ),
-                Text(
-                  textAlign:TextAlign.right,
-                  'Department of Social Justice and Empowerment',
-                  style: TextStyle(
-                    fontFamily: 'Nunito Regular',
-                    color: CustomColor.white,
-                    fontSize: FontSize.sp_10,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  textAlign:TextAlign.right,
-                  'Government of India',
-                  style: TextStyle(
-                    fontFamily: 'Nunito Regular',
-                    color: CustomColor.white,
-                    fontSize: FontSize.sp_10,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
+            bottom: 30,
+            left: 3,
+            child:  Image.asset(
+              'assets/images/nic_logo.webp',
+              height: 30,
+              width: 100,
+              color: CustomColor.white,
             ),
           ),
 
@@ -191,16 +160,7 @@ class _splash_screenState extends State<splash_screen> {
                  height: double.infinity,
                 width: double.infinity,
 
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      CustomColor.theme_color1,
-                      CustomColor.theme_color1
-                    ],
-                  ),
-                ),
+                decoration: GradientBG(),
                 child:main_stack() )));
   }
 }

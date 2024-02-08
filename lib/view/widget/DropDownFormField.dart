@@ -2,7 +2,7 @@ library dropdown_formfield;
 
 import 'package:flutter/material.dart';
 
-import '../utills/CustomColor.dart';
+import '../../utills/CustomColor.dart';
 
 class DropDownFormField extends FormField<dynamic>
 {

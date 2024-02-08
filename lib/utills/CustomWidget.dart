@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'CustomColor.dart';
 import 'FontSize.dart';
 
 Widget textViewWithFlex(
@@ -32,3 +33,21 @@ Widget dividerLine() {
     ),
   );
 }
+
+
+Decoration GradientBG()
+{
+  return BoxDecoration(
+    gradient: LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [
+        CustomColor.splash_color_top,
+        CustomColor.splash_color_buttom
+      ],
+    ),
+  );
+}
+
+
+

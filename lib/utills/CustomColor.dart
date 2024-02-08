@@ -68,5 +68,9 @@ class CustomColor
   static const drop_down_bg =   Color(0xfff8f9fa);
   static const black_dark =  Color(0xFF000000);
   static const black_light =  Color(0xFF808080);
+  static const splash_color_top =  Color(0xFFA8D6F7);
+  static const splash_color_buttom =  Color(0xFF095A92);
+  static const componet_banner_bg =  Color(0xFF0083C4);
+  static const component_card_bg =  Color(0xFFEFE9F3);
 
 }
