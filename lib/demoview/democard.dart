@@ -5,7 +5,7 @@ import '../utills/FontSize.dart';
 import '../view/screen/LoginActivity.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MyWidget());
 }
 
 class MyApp extends StatelessWidget {
@@ -114,3 +114,55 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+class MyWidget extends StatefulWidget {
+
+  @override
+  State<MyWidget> createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<MyWidget> {
+  Future<bool> _onBackPressed() async {
+    // Navigator.of(context).pop(false);
+     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginActivity(userType: '', LoginTitle: '')));
+    return true; // Example: Always allow back navigation
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home:WillPopScope(
+        onWillPop: _onBackPressed,
+        child:Scaffold(
+        appBar: AppBar(
+          title: Text('Back Press Handling'),
+        ),
+        body: Center(
+          child: Text('Press the back button to navigate to the second screen.'),
+        ),
+
+      ),
+    )
+    );
+  }
+}
+
+
+class SecondScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Second Screen'),
+      ),
+      body: Center(
+        child: Text('This is the second screen.'),
+      ),
+    );
+  }
+}
+
+
+
+

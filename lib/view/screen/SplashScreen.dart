@@ -80,7 +80,7 @@ class _splash_screenState extends State<splash_screen> {
                         textAlign:TextAlign.center,
                       'Ministry of Social Justice and \n Empowerment \n Government of India.',
                       style: TextStyle(
-                          fontFamily: 'Nunito Regular',
+                          fontFamily: 'Calibri',
                           color:CustomColor.black_dark,
                           fontSize: FontSize.sp_18,
                           fontWeight:FontWeight.bold
@@ -97,7 +97,7 @@ class _splash_screenState extends State<splash_screen> {
                       'Pradhan Mantri Anusuchit\nJaati Abhyuday Yojna\n(PM-AJAY)',
                       style: TextStyle(
 
-                          fontFamily: 'Nunito Regular',
+                          fontFamily: 'Calibri',
                           color:CustomColor.white,
                           fontSize: FontSize.sp_18,
                           fontWeight:FontWeight.bold

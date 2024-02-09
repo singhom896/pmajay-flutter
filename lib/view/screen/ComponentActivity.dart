@@ -53,7 +53,7 @@ class ComponentActivity extends StatelessWidget {
               child: Text(
                 'PM-AJAY',
                 style: TextStyle(
-                    fontFamily: 'Nunito',
+                    fontFamily: 'Calibri',
                     color: CustomColor.black_dark,
                     fontSize: FontSize.sp_20,
                     fontWeight: FontWeight.bold),
@@ -76,7 +76,7 @@ class ComponentActivity extends StatelessWidget {
                     textAlign: TextAlign.center,
                     'Our Components',
                     style: TextStyle(
-                        fontFamily: 'Nunito',
+                        fontFamily: 'Calibri',
                         color: CustomColor.white,
                         fontSize: FontSize.sp_20,
                         fontWeight: FontWeight.bold),
@@ -126,7 +126,7 @@ class ComponentActivity extends StatelessWidget {
                         child: Text(
                           'Adarsh Gram',
                           style: TextStyle(
-                              fontFamily: 'Nunito',
+                              fontFamily: 'Calibri',
                               color: CustomColor.black_dark,
                               fontSize: FontSize.sp_20,
                               fontWeight: FontWeight.bold),
@@ -138,7 +138,7 @@ class ComponentActivity extends StatelessWidget {
                           textAlign: TextAlign.center,
                           'Development of SC dominated\n villages into “Adarsh Gram”',
                           style: TextStyle(
-                              fontFamily: 'Nunito Regular',
+                              fontFamily: 'Calibri Regular',
                               color: CustomColor.black_dark,
                               fontSize: FontSize.sp_15,
                               fontWeight: FontWeight.bold),
@@ -168,7 +168,7 @@ class ComponentActivity extends StatelessWidget {
                               'Login',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontFamily: 'Nunito Regular',
+                                fontFamily: 'Calibri Regular',
                                 color: CustomColor.black_dark,
                                 fontSize: 15,
                               ),
@@ -224,7 +224,7 @@ class ComponentActivity extends StatelessWidget {
                         child: Text(
                           'Grants-in-aid',
                           style: TextStyle(
-                              fontFamily: 'Nunito',
+                              fontFamily: 'Calibri',
                               color: CustomColor.black_dark,
                               fontSize: FontSize.sp_20,
                               fontWeight: FontWeight.bold),
@@ -236,7 +236,7 @@ class ComponentActivity extends StatelessWidget {
                           textAlign: TextAlign.center,
                           'Grants-in-aid to State/Districts',
                           style: TextStyle(
-                              fontFamily: 'Nunito Regular',
+                              fontFamily: 'Calibri Regular',
                               color: CustomColor.black_dark,
                               fontSize: FontSize.sp_15,
                               fontWeight: FontWeight.bold),
@@ -266,7 +266,7 @@ class ComponentActivity extends StatelessWidget {
                               'Login',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontFamily: 'Nunito Regular',
+                                fontFamily: 'Calibri Regular',
                                 color: CustomColor.black_dark,
                                 fontSize: 15,
                               ),
@@ -322,7 +322,7 @@ class ComponentActivity extends StatelessWidget {
                         child: Text(
                           'Hostels',
                           style: TextStyle(
-                              fontFamily: 'Nunito',
+                              fontFamily: 'Calibri',
                               color: CustomColor.black_dark,
                               fontSize: FontSize.sp_20,
                               fontWeight: FontWeight.bold),
@@ -334,7 +334,7 @@ class ComponentActivity extends StatelessWidget {
                           textAlign: TextAlign.center,
                           'Construction/Repair of Hostels',
                           style: TextStyle(
-                              fontFamily: 'Nunito Regular',
+                              fontFamily: 'Calibri Regular',
                               color: CustomColor.black_dark,
                               fontSize: FontSize.sp_15,
                               fontWeight: FontWeight.bold),
@@ -364,7 +364,7 @@ class ComponentActivity extends StatelessWidget {
                               'Login',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontFamily: 'Nunito Regular',
+                                fontFamily: 'Calibri Regular',
                                 color: CustomColor.black_dark,
                                 fontSize: 15,
                               ),

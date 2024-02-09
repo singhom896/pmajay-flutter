@@ -72,5 +72,6 @@ class CustomColor
   static const splash_color_buttom =  Color(0xFF095A92);
   static const componet_banner_bg =  Color(0xFF0083C4);
   static const component_card_bg =  Color(0xFFEFE9F3);
+  static const patter_bg =  Color(0xBEE2E6EB);
 
 }

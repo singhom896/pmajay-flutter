@@ -105,7 +105,10 @@ class _NodelOfficerDetailsState extends State<NodelOfficerDetails> {
           ),
           title: Align(
               alignment: Alignment.topLeft, child: Text(AppString.title_nodal_officer_details,
-              style: TextStyle(color: Colors.white))),
+              style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Calibri',
+              ))),
           backgroundColor: CustomColor.theme_color1,
           elevation: 2.0,
           leading: IconButton(
