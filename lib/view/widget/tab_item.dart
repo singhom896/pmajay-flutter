@@ -19,7 +19,7 @@ class TabItem extends StatelessWidget {
             Text(text, style: TextStyle(
               color: isSelected ? Colors.white : Colors.black,
               fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-              fontSize: 12
+              fontSize: 7
             ),)
           ],
         ),
