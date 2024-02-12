@@ -73,5 +73,10 @@ class CustomColor
   static const componet_banner_bg =  Color(0xFF0083C4);
   static const component_card_bg =  Color(0xFFEFE9F3);
   static const patter_bg =  Color(0xBEE2E6EB);
-
+  static const buttom_sheet_bg =   Color(0xC5095A92);
+  static const mi_title_bg =   Color(0xFF6C757D);
+  static const mi_card_bg =   Color(0xFFDC3545);
+  static const mi_card_already_fill_bg =   Color(0xFF1D7539);
+  static const dashboard_card_bg =   Color(0xFF034968);
+  static const dashboard_card_bg_light =   Color(0xFF055D85);
 }

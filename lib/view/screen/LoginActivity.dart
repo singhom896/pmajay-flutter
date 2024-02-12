@@ -12,10 +12,11 @@ import '../../network/remote/Status.dart';
 import '../../network/viewmodel/MainListVM.dart';
 import '../../utills/AppString.dart';
 import '../../utills/CustomColor.dart';
-import '../../utills/CustomWidget.dart';
+import '../widget/CustomWidget.dart';
 import '../../utills/FontSize.dart';
 import '../../utills/SharedPreferencesHelper.dart';
 import '../../utills/utils.dart';
+import '../widget/ResizableTextView.dart';
 import '../widget/TermsCondition.dart';
 import '../widget/LoaderWidget.dart';
 import 'ComponentActivity.dart';
@@ -87,8 +88,7 @@ class _LoginActivityState extends State<LoginActivity>
     // We have taken A to Z all small nand
     // caps letters along with numbers
     // You can change this as per your convience
-    const letters =
-        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+    const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
     const length = 6;
     // Length of Captcha to be generated
     final random = Random();
@@ -327,16 +327,10 @@ class _LoginActivityState extends State<LoginActivity>
                           fit: BoxFit.fill,
                         ),
                         // Text widget on top of the background image
+
                         Center(
-                          child: Text(
-                            textAlign: TextAlign.center,
-                            "${widget.LoginTitle}",
-                            style: TextStyle(
-                                fontFamily: 'Calibri',
-                                color: CustomColor.white,
-                                fontSize: FontSize.sp_20,
-                                fontWeight: FontWeight.bold),
-                          ),
+                          child:  ResizableTextView("${widget.LoginTitle}",FontSize.sp_20,CustomColor.white,FontWeight.bold),
+
                         ),
                       ],
                     ),
@@ -668,11 +662,12 @@ class _LoginActivityState extends State<LoginActivity>
                                   Expanded(
                                     child: AutofillGroup(
                                         child: TextField(
-                                          controller: _userNameTextCont,
+                                          controller: _usercaptchaCont,
                                           decoration: InputDecoration(
                                             hintText: AppString.enter_captcha,
                                             border: InputBorder.none,
                                             labelStyle: TextStyle(
+
                                               color: CustomColor.drawer_header_bg,
                                               // Change the label text color
                                               fontSize: FontSize.sp_13,
@@ -690,19 +685,13 @@ class _LoginActivityState extends State<LoginActivity>
                               ),
                             ),
                           ),
+
                           Align(
                               alignment: Alignment.topRight,
                               child: Container(
                                 margin: EdgeInsets.only(top: 5, right: 20),
-                                child: Text(
-                                  'Forgot Password?',
-                                  style: TextStyle(
-                                    fontFamily: 'Calibri',
-                                    color: CustomColor.splash_color_buttom,
-                                    fontSize: FontSize.sp_13,
-                                    fontStyle: FontStyle.normal,
-                                  ),
-                                ),
+                                child:  ResizableTextView(AppString.login_forget_pass,FontSize.sp_13,CustomColor.splash_color_buttom,FontWeight.normal),
+
                               )),
                           InkWell(
                             onTap: () {
@@ -788,15 +777,10 @@ class _LoginActivityState extends State<LoginActivity>
                                   ),
                                   borderRadius: BorderRadius.circular(45),
                                 ),
+
                                 child: Center(
-                                  child: Text(
-                                    AppString.bt_login,
-                                    style: TextStyle(
-                                        fontFamily: 'Calibri',
-                                        color: CustomColor.black_dark,
-                                        fontWeight:FontWeight.bold
-                                    ),
-                                  ),
+                                  child:  ResizableTextView(AppString.bt_login,FontSize.sp_13,CustomColor.black_dark,FontWeight.bold),
+
                                 ),
                               ),
                             ),

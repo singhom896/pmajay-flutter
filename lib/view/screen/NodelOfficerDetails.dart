@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 
 import '../../utills/AppString.dart';
 import '../../utills/CustomColor.dart';
-import '../../utills/CustomWidget.dart';
+import '../../utills/FontSize.dart';
+import '../widget/CustomWidget.dart';
+import '../widget/ResizableTextView.dart';
 
 
 
@@ -95,7 +97,9 @@ class _NodelOfficerDetailsState extends State<NodelOfficerDetails> {
   @override
   Widget build(BuildContext context)
   {
+
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           shape: RoundedRectangleBorder(
@@ -104,11 +108,8 @@ class _NodelOfficerDetailsState extends State<NodelOfficerDetails> {
             ),
           ),
           title: Align(
-              alignment: Alignment.topLeft, child: Text(AppString.title_nodal_officer_details,
-              style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'Calibri',
-              ))),
+              alignment: Alignment.topLeft,
+              child: ToolbarTextView(AppString.title_nodal_officer_details,FontSize.sp_18,CustomColor.white,FontWeight.bold)),
           backgroundColor: CustomColor.theme_color1,
           elevation: 2.0,
           leading: IconButton(

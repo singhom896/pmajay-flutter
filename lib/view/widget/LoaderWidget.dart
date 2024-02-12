@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../utills/CustomColor.dart';
 
 class LoaderWidget extends StatelessWidget {
@@ -19,15 +20,23 @@ class LoaderWidget extends StatelessWidget {
             // SizedBox(height: 100,
             //   width: 100,
             //   child:Lottie.asset(
-            //       'assets/images/bus_loader.json'),
+            //       'assets/images/loader_logo.json'),
             // ),
 
-
+            SizedBox(
+              height: 100,
+              width: 100,
+              child:Image.asset(
+                'assets/images/loader_logo.gif',
+                height: 100,
+                width: 100,
+              ),
+            ),
             Text(
               message,
               style: const TextStyle(
                 fontSize: 16.0,
-                color: CustomColor.purple_dark, // Text color
+                color: CustomColor.black_dark, // Text color
               ),
             ),
           ],

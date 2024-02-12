@@ -7,7 +7,8 @@ import '../../../widget/DynamicWidgets.dart';
 import '../../../../utills/CustomColor.dart';
 import '../../../../utills/FontSize.dart';
 import '../../../widget/ExpandableTextWidget.dart';
-import '../../../../utills/CustomWidget.dart';
+import '../../../widget/CustomWidget.dart';
+import '../../../widget/ResizableTextView.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -24,19 +25,19 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
-      home: const VillageFormatiadd(),
+      home: const VillageFormat_I_Add(),
     );
   }
 }
 
-class VillageFormatiadd extends StatefulWidget {
-  const VillageFormatiadd({super.key});
+class VillageFormat_I_Add extends StatefulWidget {
+  const VillageFormat_I_Add({super.key});
 
   @override
-  State<VillageFormatiadd> createState() => _village_format_i_addState();
+  State<VillageFormat_I_Add> createState() => _village_format_i_addState();
 }
 
-class _village_format_i_addState extends State<VillageFormatiadd> {
+class _village_format_i_addState extends State<VillageFormat_I_Add> {
   final _formKey = GlobalKey<FormState>();
   String blockValue = "--Select--";
   String gramValue = "--Select--";
@@ -116,8 +117,8 @@ class _village_format_i_addState extends State<VillageFormatiadd> {
               ),
             ),
             title: Align(
-                alignment: Alignment.topLeft, child: Text(AppString.title_assessment_format_i,
-                style: TextStyle(color: Colors.white))),
+                alignment: Alignment.topLeft,
+                child: ToolbarTextView(AppString.title_assessment_format_i,FontSize.sp_18,CustomColor.white,FontWeight.bold)),
             backgroundColor: CustomColor.theme_color1,
             elevation: 2.0,
             leading: IconButton(

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../utills/FontSize.dart';
+import 'ResizableTextView.dart';
+
 class TabItem extends StatelessWidget {
   final String text;
   final IconData icon;
@@ -16,11 +19,8 @@ class TabItem extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Icon(icon, color: isSelected ? Colors.white : Colors.black,),
-            Text(text, style: TextStyle(
-              color: isSelected ? Colors.white : Colors.black,
-              fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-              fontSize: 7
-            ),)
+            ResizableTextView(text,FontSize.sp_10,isSelected ? Colors.white : Colors.black,isSelected ? FontWeight.w600 : FontWeight.normal),
+
           ],
         ),
       ),

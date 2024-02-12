@@ -2,10 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'package:pmajay/utills/AppString.dart';
 import 'package:pmajay/utills/CustomColor.dart';
-import '../../utills/CustomWidget.dart';
+import '../widget/CustomWidget.dart';
 import '../../utills/FontSize.dart';
 import '../../utills/SharedPreferencesHelper.dart';
+import '../widget/ResizableTextView.dart';
 import 'DashBoard.dart';
 import 'ComponentActivity.dart';
 
@@ -69,40 +72,75 @@ class _splash_screenState extends State<splash_screen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(
-
-                      'assets/images/ic_ashokstambh.webp',
-                      height: 100,
-                      width: 100,
-                    ),
-                    SizedBox(height: 10,),
-                    Text(
-                        textAlign:TextAlign.center,
-                      'Ministry of Social Justice and \n Empowerment \n Government of India.',
-                      style: TextStyle(
-                          fontFamily: 'Calibri',
-                          color:CustomColor.black_dark,
-                          fontSize: FontSize.sp_18,
-                          fontWeight:FontWeight.bold
+                    InteractiveViewer(
+                      // boundary of image
+                      boundaryMargin: const EdgeInsets.all(20),
+                      minScale: 0.1,
+                      maxScale: 1.6,
+                      child: Container(
+                        height: 100,
+                        width: 100,
+                        // Using image from local storage
+                        child: Image.asset(
+                          "assets/images/ic_ashokstambh.webp",
+                        ),
                       ),
                     ),
-                    Image.asset(
-                      'assets/images/ic_logo.webp',
+
+                    // Image.asset(
+                    //   'assets/images/ic_ashokstambh.webp',
+                    //   height: 100,
+                    //   width: 100,
+                    // ),
+                    SizedBox(height: 10,),
+
+                    FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          textAlign:TextAlign.center,
+                          'Ministry of Social Justice and \n Empowerment \n Government of India.',
+                          style: TextStyle(
+                              fontFamily: 'Calibri',
+                              color:CustomColor.black_dark,
+                              fontSize: FontSize.sp_18,
+                              fontWeight:FontWeight.bold
+                          ),
+                        )),
+                    ResizableTextView(AppString.splash_st_ministry,FontSize.sp_18,CustomColor.black_dark,FontWeight.bold),
+
+                    // InteractiveViewer(
+                    //   // boundary of image
+                    //   boundaryMargin: const EdgeInsets.all(20),
+                    //   minScale: 0.1,
+                    //   maxScale: 1.6,
+                    //   child: Container(
+                    //     height: 100,
+                    //     width: 100,
+                    //     // Using image from local storage
+                    //     child: Image.asset(
+                    //       "assets/images/ic_logo.webp",
+                    //     ),
+                    //   ),
+                    // ),
+                    // Image.asset(
+                    //   'assets/images/ic_logo.webp',
+                    //   height: 100,
+                    //   width: 100,
+                    // ),
+                    SizedBox(height: 20,),
+                    SizedBox(
                       height: 100,
                       width: 100,
-                    ),
-                    SizedBox(height: 10,),
-                    Text(
-                      textAlign:TextAlign.center,
-                      'Pradhan Mantri Anusuchit\nJaati Abhyuday Yojna\n(PM-AJAY)',
-                      style: TextStyle(
-
-                          fontFamily: 'Calibri',
-                          color:CustomColor.white,
-                          fontSize: FontSize.sp_18,
-                          fontWeight:FontWeight.bold
+                      child:Image.asset(
+                        'assets/images/loader_logo.gif',
+                        height: 100,
+                        width: 100,
                       ),
                     ),
+                    SizedBox(height: 10,),
+                    ResizableTextView(AppString.splash_st_app_subtitle,FontSize.sp_18,CustomColor.white,FontWeight.bold),
+
+
 
 
                   ],),
@@ -112,8 +150,7 @@ class _splash_screenState extends State<splash_screen> {
 
 
           Positioned(
-
-            bottom: 5,
+            bottom: 10,
             left: 5,
             child:  Image.asset(
               'assets/images/nic_logo.webp',

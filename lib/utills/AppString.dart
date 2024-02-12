@@ -59,7 +59,12 @@ class AppString
   static String  title_village_verification ='Village Verification';
   static String  title_contact_us ='Contact Us';
   static String  title_site_map ='Site Map';
-  static String  title_assessment_format_i ='Need Assessment Format – I: Village Level Data';
+  static String  title_assessment_format_i ='Format – I: Village Level Data';
+  static String  title_assessment_format_II ='Format – II: Data for Infrastructure Development';
+  static String  title_household_data_level_IIIA ='Format - III(A): Household Level Data';
+
+
+
   static String  title_nodal_officer_details ='Details of State Nodal Officer';
   static String  user_name ='Login Id';
   static String  enter_captcha ='Enter Captcha';
@@ -69,5 +74,23 @@ class AppString
   static String  title_sheet_format_i  ='Format -I';
   static String  title_sheet_format_ii  ='Format -II- Add';
   static String  title_sheet_format_ii_a  ='Format -III(A)';
+  static String  subtitle_sheet_format_i  ='Need Assessment Format – I: Village Level Data';
+  static String  subtitle_sheet_format_ii  ='Format – II: Village level Data for Infrastructure Development ';
+  static String  subtitle_sheet_format_ii_a  ='Format - III(A): Household Level Data. \n\n';
+
+
+  static String  splash_st_ministry  ='Ministry of Social Justice and \n Empowerment \n Government of India.';
+  static String  splash_st_app_subtitle  ='Pradhan Mantri Anusuchit\nJaati Abhyuday Yojna\n(PM-AJAY)';
+  static String  title_our_components  ='Our Components';
+  static String  title_adarsh_gram  ='Adarsh Gram';
+  static String  title_adarsh_gram_sub  ='Development of SC dominated\n villages into “Adarsh Gram”';
+  static String  title_login  ='Login';
+  static String  title_Grants_in_aid  ='Grants-in-aid';
+  static String  title_Grants_in_aid_sub  ='Grants-in-aid to State/Districts';
+  static String  title_hostel  ='Hostels';
+  static String  title_hostel_sub  ='Construction/Repair of Hostels';
+  static String  login_forget_pass  ='Forgot Password?';
+   static String write_unicode_st = '\u{2713}';
+
 
 }

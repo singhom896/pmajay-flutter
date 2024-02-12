@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pmajay/utills/CustomWidget.dart';
+import 'package:pmajay/view/widget/CustomWidget.dart';
 
+import '../../utills/AppString.dart';
 import '../../utills/CustomColor.dart';
 import '../../utills/FontSize.dart';
+import '../widget/ResizableTextView.dart';
 import '../widget/RibbonBanner.dart';
 import 'LoginActivity.dart';
 
@@ -34,7 +36,7 @@ class ComponentActivity extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget main_card = Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.0),
+      padding: EdgeInsets.only(top: 10,left:10,right: 10,bottom: 30),
       // Adjust the horizontal padding as needed
 
       child: Center(
@@ -49,15 +51,10 @@ class ComponentActivity extends StatelessWidget {
               width: 130,
               // fit: BoxFit.fitCenter,
             ),
+
             Container(
-              child: Text(
-                'PM-AJAY',
-                style: TextStyle(
-                    fontFamily: 'Calibri',
-                    color: CustomColor.black_dark,
-                    fontSize: FontSize.sp_20,
-                    fontWeight: FontWeight.bold),
-              ),
+              child:  ResizableTextView(AppString.app_name,FontSize.sp_20,CustomColor.black_dark,FontWeight.bold),
+
             ),
             Stack(
               alignment: Alignment.center, // Aligns children at the center
@@ -71,16 +68,10 @@ class ComponentActivity extends StatelessWidget {
                   fit: BoxFit.fill,
                 ),
                 // Text widget on top of the background image
+
                 Center(
-                  child: Text(
-                    textAlign: TextAlign.center,
-                    'Our Components',
-                    style: TextStyle(
-                        fontFamily: 'Calibri',
-                        color: CustomColor.white,
-                        fontSize: FontSize.sp_20,
-                        fontWeight: FontWeight.bold),
-                  ),
+                  child: ResizableTextView(AppString.title_our_components,FontSize.sp_20,CustomColor.white,FontWeight.bold),
+
                 ),
               ],
             ),
@@ -122,27 +113,17 @@ class ComponentActivity extends StatelessWidget {
                   constraints: BoxConstraints(),
                   child: Column(
                     children: [
+
                       Container(
-                        child: Text(
-                          'Adarsh Gram',
-                          style: TextStyle(
-                              fontFamily: 'Calibri',
-                              color: CustomColor.black_dark,
-                              fontSize: FontSize.sp_20,
-                              fontWeight: FontWeight.bold),
-                        ),
+                        child:  ResizableTextView(AppString.title_adarsh_gram,FontSize.sp_20,CustomColor.black_dark,FontWeight.bold),
+
                       ),
+
+
                       Padding(
                         padding: EdgeInsets.only(left: 10, right: 10),
-                        child: Text(
-                          textAlign: TextAlign.center,
-                          'Development of SC dominated\n villages into “Adarsh Gram”',
-                          style: TextStyle(
-                              fontFamily: 'Calibri Regular',
-                              color: CustomColor.black_dark,
-                              fontSize: FontSize.sp_15,
-                              fontWeight: FontWeight.bold),
-                        ),
+                        child:  ResizableTextView(AppString.title_adarsh_gram_sub,FontSize.sp_15,CustomColor.black_dark,FontWeight.bold),
+
                       ),
                       Align(
                         alignment: Alignment.center,
@@ -163,16 +144,10 @@ class ComponentActivity extends StatelessWidget {
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
+
                           child: Center(
-                            child: Text(
-                              'Login',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Calibri Regular',
-                                color: CustomColor.black_dark,
-                                fontSize: 15,
-                              ),
-                            ),
+                            child: ResizableTextView(AppString.title_login,FontSize.sp_15,CustomColor.black_dark,FontWeight.bold),
+
                           ),
                         ),
                       ),
@@ -220,27 +195,16 @@ class ComponentActivity extends StatelessWidget {
                   constraints: BoxConstraints(),
                   child: Column(
                     children: [
+
                       Container(
-                        child: Text(
-                          'Grants-in-aid',
-                          style: TextStyle(
-                              fontFamily: 'Calibri',
-                              color: CustomColor.black_dark,
-                              fontSize: FontSize.sp_20,
-                              fontWeight: FontWeight.bold),
-                        ),
+                        child:  ResizableTextView(AppString.title_Grants_in_aid,FontSize.sp_20,CustomColor.black_dark,FontWeight.bold),
+
                       ),
+
                       Padding(
                         padding: EdgeInsets.only(left: 10, right: 10),
-                        child: Text(
-                          textAlign: TextAlign.center,
-                          'Grants-in-aid to State/Districts',
-                          style: TextStyle(
-                              fontFamily: 'Calibri Regular',
-                              color: CustomColor.black_dark,
-                              fontSize: FontSize.sp_15,
-                              fontWeight: FontWeight.bold),
-                        ),
+                        child:  ResizableTextView(AppString.title_Grants_in_aid_sub,FontSize.sp_15,CustomColor.black_dark,FontWeight.bold),
+
                       ),
                       Align(
                         alignment: Alignment.center,
@@ -262,15 +226,10 @@ class ComponentActivity extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Center(
-                            child: Text(
-                              'Login',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Calibri Regular',
-                                color: CustomColor.black_dark,
-                                fontSize: 15,
-                              ),
-                            ),
+
+
+                            child: ResizableTextView(AppString.title_login,FontSize.sp_15,CustomColor.black_dark,FontWeight.bold),
+
                           ),
                         ),
                       ),
@@ -318,27 +277,15 @@ class ComponentActivity extends StatelessWidget {
                   constraints: BoxConstraints(),
                   child: Column(
                     children: [
+
                       Container(
-                        child: Text(
-                          'Hostels',
-                          style: TextStyle(
-                              fontFamily: 'Calibri',
-                              color: CustomColor.black_dark,
-                              fontSize: FontSize.sp_20,
-                              fontWeight: FontWeight.bold),
-                        ),
+                        child:  ResizableTextView(AppString.title_hostel,FontSize.sp_20,CustomColor.black_dark,FontWeight.bold),
+
                       ),
                       Padding(
                         padding: EdgeInsets.only(left: 10, right: 10),
-                        child: Text(
-                          textAlign: TextAlign.center,
-                          'Construction/Repair of Hostels',
-                          style: TextStyle(
-                              fontFamily: 'Calibri Regular',
-                              color: CustomColor.black_dark,
-                              fontSize: FontSize.sp_15,
-                              fontWeight: FontWeight.bold),
-                        ),
+                        child:  ResizableTextView(AppString.title_hostel_sub,FontSize.sp_15,CustomColor.black_dark,FontWeight.bold),
+
                       ),
                       Align(
                         alignment: Alignment.center,
@@ -360,15 +307,8 @@ class ComponentActivity extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Center(
-                            child: Text(
-                              'Login',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Calibri Regular',
-                                color: CustomColor.black_dark,
-                                fontSize: 15,
-                              ),
-                            ),
+                            child:ResizableTextView(AppString.title_login,FontSize.sp_15,CustomColor.black_dark,FontWeight.bold),
+
                           ),
                         ),
                       ),
