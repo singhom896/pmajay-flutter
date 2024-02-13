@@ -40,6 +40,16 @@ class MyApp extends StatelessWidget {
   }
 }
 
+/*
+No. of villages selected = 10
+No. of villages with infrastructure survey completed = 8
+Total households= 5000
+Completed Households Survey = 2500
+Incomplete Households Survey = 15
+
+*/
+
+
 class DashBoard extends StatefulWidget {
   const DashBoard({super.key});
 
@@ -101,18 +111,18 @@ class _DashBoardState extends State<DashBoard> {
         "2,63,13,385",
         "SC Population Covered",
         VillageFormat_II_InfrastructureAdd()),
-    ButtomMenu(
-        "18,061",
-        "No. of Villages infrastructure assessment initiated",
-        VillageFormat_II_InfrastructureAdd()),
-    ButtomMenu(
-        "17,537",
-        "No. of Villages infrastructure assessment Completed",
-        VillageFormat_II_InfrastructureAdd()),
-    ButtomMenu(
-        "2,41,312",
-        "No. of works identified for execution",
-        VillageFormat_II_InfrastructureAdd()),
+    // ButtomMenu(
+    //     "18,061",
+    //     "No. of Villages infrastructure assessment initiated",
+    //     VillageFormat_II_InfrastructureAdd()),
+    // ButtomMenu(
+    //     "17,537",
+    //     "No. of Villages infrastructure assessment Completed",
+    //     VillageFormat_II_InfrastructureAdd()),
+    // ButtomMenu(
+    //     "2,41,312",
+    //     "No. of works identified for execution",
+    //     VillageFormat_II_InfrastructureAdd()),
 
   ];
 
