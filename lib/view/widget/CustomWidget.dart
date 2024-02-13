@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../utills/CustomColor.dart';
+import '../../utills/Dimens.dart';
 import '../../utills/FontSize.dart';
 
 Widget textViewWithFlex(
@@ -25,6 +26,43 @@ Widget textViewWithFlex(
   );
 }
 
+Widget buttonYellowSize(String btText, Alignment alignment, Color colorlight,
+    Color colordark, double maxWidth, double maxHeight, double fontsize) {
+  return Align(
+      alignment: alignment,
+      child: Container(
+        constraints: BoxConstraints(
+            minWidth: 0, // Set a minimum width of 0
+            maxWidth: maxWidth, // Set a maximum width if needed
+            minHeight: 0,
+            maxHeight: maxHeight),
+        height: Dimens.controller_height_size,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              colorlight,
+// Replace with your desired colors
+              colordark,
+// Replace with your desired colors
+            ],
+          ),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Center(
+          child: Text(
+            btText,
+            style: TextStyle(
+              fontFamily: 'Nunito Regular',
+              color: Colors.white,
+              fontSize: fontsize,
+            ),
+          ),
+        ),
+      ));
+}
+
 Widget dividerLine() {
   return Container(
     margin: const EdgeInsets.only(left: 3, right: 3),
@@ -34,6 +72,7 @@ Widget dividerLine() {
     ),
   );
 }
+
 Widget dividerWhiteLine() {
   return Container(
     margin: const EdgeInsets.only(left: 1, right: 3),
@@ -43,6 +82,7 @@ Widget dividerWhiteLine() {
     ),
   );
 }
+
 Decoration GradientBGHoriz() {
   return BoxDecoration(
     gradient: LinearGradient(

@@ -9,7 +9,7 @@ import 'package:pmajay/view/screen/DashBoard.dart';
 import 'package:provider/provider.dart';
 
 import '../../network/remote/Status.dart';
-import '../../network/viewmodel/MainListVM.dart';
+import '../../network/viewmodel/MyProfileVM.dart';
 import '../../utills/AppString.dart';
 import '../../utills/CustomColor.dart';
 import '../widget/CustomWidget.dart';
@@ -106,7 +106,7 @@ class _LoginActivityState extends State<LoginActivity>
       vsync: this,
       duration: Duration(milliseconds: 500),
     );
-    viewModelListner = Provider.of<MainListVM>(context, listen: false);
+    viewModelListner = Provider.of<MyProfileVM>(context, listen: false);
     viewModelListner.addListener(userLoginListner);
     // Listen to changes in the text field
 
@@ -257,7 +257,7 @@ class _LoginActivityState extends State<LoginActivity>
 
   @override
   Widget build(BuildContext context) {
-    final viewModelMain = Provider.of<MainListVM>(context);
+    final viewModelMain = Provider.of<MyProfileVM>(context);
     Widget circleProcessbar = Container(
         margin: const EdgeInsets.only(
           top: 250,

@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 
 
 
-class MainListVM extends ChangeNotifier {
+class MyProfileVM extends ChangeNotifier {
 
   //
   // final _myRepo = MainRepoImp();
@@ -30,6 +30,16 @@ class MainListVM extends ChangeNotifier {
     //     .onError((error, stackTrace) =>
     //     _setUserLogin(ApiResponse.error(error.toString())));
 
+  }
+
+  late String? profilePath="" ;
+
+  String? get myProfileData => profilePath;
+
+  set myData(String? _profilePath)
+  {
+    profilePath = _profilePath;
+    notifyListeners();
   }
 
 

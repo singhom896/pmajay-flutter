@@ -91,6 +91,6 @@ class AppString
   static String  title_hostel_sub  ='Construction/Repair of Hostels';
   static String  login_forget_pass  ='Forgot Password?';
    static String write_unicode_st = '\u{2713}';
-
-
+  static String  capture_pick ='Pick/Capture Image';
+  static String  Submit ='Submit';
 }

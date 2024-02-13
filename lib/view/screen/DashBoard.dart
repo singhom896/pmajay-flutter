@@ -6,11 +6,9 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../utills/ButtomMenu.dart';
 import '../../utills/FontSize.dart';
 import '../widget/CustomWidget.dart';
-import '../widget/Drawer.dart';
 import '../../utills/AppString.dart';
 import '../../utills/CustomColor.dart';
 import '../widget/LoaderWidget.dart';
-import '../widget/MyShape.dart';
 import '../widget/ResizableTextView.dart';
 import '../widget/tab_item.dart';
 import 'NodelOfficerDetails.dart';
@@ -25,7 +23,7 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-// This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -39,6 +37,8 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+// rk asram ka pass
 
 /*
 No. of villages selected = 10
