@@ -10,7 +10,8 @@ class ButtomMenu
   final String title;
   final String subTitle;
   final StatefulWidget navigateClass;
-  ButtomMenu(this.title, this.subTitle,this.navigateClass);
+  final Color backgroundColor;
+  ButtomMenu(this.title, this.subTitle,this.navigateClass,this.backgroundColor);
 
 
 }

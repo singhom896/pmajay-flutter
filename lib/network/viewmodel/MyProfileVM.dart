@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
+import '../data/AddCommittee.dart';
+import '../data/SaveCameraLatLong.dart';
+
 
 
 
@@ -42,5 +45,24 @@ class MyProfileVM extends ChangeNotifier {
     notifyListeners();
   }
 
+
+  late SaveCameraLatLong? saveData;
+
+  SaveCameraLatLong? get getSaveData => saveData;
+  set setCameraPick(SaveCameraLatLong saveObj)
+  {
+    saveData = saveObj;
+    notifyListeners();
+  }
+
+
+  late List<AddCommittee?> saveCommitteeList;
+
+  List<AddCommittee?> get getCommitteeList => saveCommitteeList;
+  set setAddCommitteeList(List<AddCommittee?> saveCommittee)
+  {
+    saveCommitteeList = saveCommittee;
+    notifyListeners();
+  }
 
 }

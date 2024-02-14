@@ -103,7 +103,26 @@ Decoration GradientBGHoriz() {
     ],
   );
 }
-
+Decoration GradientBGHorizColor(Color first,Color second) {
+  return BoxDecoration(
+    gradient: LinearGradient(
+      colors: [
+        first,
+        second,
+      ],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    ),
+    borderRadius: BorderRadius.circular(5),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black12,
+        offset: Offset(5, 5),
+        blurRadius: 10,
+      )
+    ],
+  );
+}
 Decoration GradientBG() {
   return BoxDecoration(
     gradient: LinearGradient(

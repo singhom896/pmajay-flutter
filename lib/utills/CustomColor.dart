@@ -79,4 +79,14 @@ class CustomColor
   static const mi_card_already_fill_bg =   Color(0xFF1D7539);
   static const dashboard_card_bg =   Color(0xFF034968);
   static const dashboard_card_bg_light =   Color(0xFF055D85);
+
+  static const card_1 =   Color(0xFFE7CEBD);
+  static const card_2 =   Color(0xFF8EACEA);
+  static const card_3 =   Color(0xFF9CD9D9);
+  static const card_4 =   Color(0xFF97C79B);
+  static const card_5 =   Color(0xFFD9AAD9);
+  static const card_6 =   Color(0xFFD09379);
+
+
+
 }

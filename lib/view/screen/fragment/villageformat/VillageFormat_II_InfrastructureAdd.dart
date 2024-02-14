@@ -106,12 +106,12 @@ class _village_format_i_addState
   }
 
   final menu_buttom_sheet = [
-    ButtomMenu('x 1.1', 'x 1.1', VillageFormat_I_Add()),
-    ButtomMenu('x 1.2', 'x 1.2', VillageFormat_I_Add()),
-    ButtomMenu('x 1.3', 'x 1.3', VillageFormat_I_Add()),
-    ButtomMenu('x 1.4', 'x 1.4', VillageFormat_I_Add()),
-    ButtomMenu('x 1.5', 'x 1.5', VillageFormat_I_Add()),
-    ButtomMenu('x 1.6', 'x 1.6', VillageFormat_I_Add()),
+    ButtomMenu('x 1.1', 'x 1.1', VillageFormat_I_Add(),CustomColor.card_5),
+    ButtomMenu('x 1.2', 'x 1.2', VillageFormat_I_Add(),CustomColor.card_5),
+    ButtomMenu('x 1.3', 'x 1.3', VillageFormat_I_Add(),CustomColor.card_5),
+    ButtomMenu('x 1.4', 'x 1.4', VillageFormat_I_Add(),CustomColor.card_5),
+    ButtomMenu('x 1.5', 'x 1.5', VillageFormat_I_Add(),CustomColor.card_5),
+    ButtomMenu('x 1.6', 'x 1.6', VillageFormat_I_Add(),CustomColor.card_5),
   ];
 
   Future<bool> _onBackPressed(BuildContext context) async {

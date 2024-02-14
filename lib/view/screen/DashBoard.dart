@@ -1,13 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import '../../locator.dart';
+import '../../network/viewmodel/MyProfileVM.dart';
 import '../../utills/ButtomMenu.dart';
 import '../../utills/FontSize.dart';
 import '../widget/CustomWidget.dart';
 import '../../utills/AppString.dart';
 import '../../utills/CustomColor.dart';
+import '../widget/ExpandableTextWidget.dart';
 import '../widget/LoaderWidget.dart';
 import '../widget/ResizableTextView.dart';
 import '../widget/tab_item.dart';
@@ -17,24 +21,42 @@ import 'fragment/villageformat/VillageFormat_II_InfrastructureAdd.dart';
 import 'fragment/villageformat/VillageFormat_I_Add.dart';
 
 void main() {
-  runApp(const MyApp());
+  setupLocator();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
-        useMaterial3: true,
-      ),
-      home: const DashBoard(),
-    );
+    final textTheme = Theme.of(context).textTheme;
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => MyProfileVM()),
+        ],
+        child: MaterialApp(
+          // theme: ThemeData(
+          //   primaryColor: CustomColor.white,
+          //   primaryColorDark: CustomColor.white,// Define the primary color
+          //   iconTheme: IconThemeData(color: Colors.white),
+          // ),
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: CustomColor.white),
+            useMaterial3: true,
+            textTheme: GoogleFonts.latoTextTheme(textTheme).copyWith(
+              bodyMedium: GoogleFonts.roboto(textStyle: textTheme.bodyMedium),
+            ),
+          ),
+          debugShowCheckedModeBanner: false,
+          // initialRoute: Routes.initialRoute,
+          // routes: Routes.routes,
+          home: DashBoard(),
+          //home: YourScreen(),
+          // home: PortraitLandscapePlayerPage(),
+          routes: {
+            // When navigating to the "/" route, build the FirstScreen widget.
+            '/DashBoard': (context) => DashBoard(),
+          },
+        ));
   }
 }
 
@@ -65,7 +87,7 @@ class _DashBoardState extends State<DashBoard> {
     ]);
   }
 
-  final tabs = ['Home', 'Tutorial Videos', 'FAQ', 'Contact Us', 'Menu'];
+  final tabs = ['Home', 'Tutorial Videos', 'FAQ', 'Contact Us','Profile', 'Menu'];
 
   // final menu_buttom_sheet = [
   //   AppString.title_sheet_format_i,
@@ -76,53 +98,49 @@ class _DashBoardState extends State<DashBoard> {
   final menu_buttom_sheet = [
     ButtomMenu(
         AppString.title_sheet_format_i,
-        AppString.subtitle_sheet_format_i, VillageFormat_I_Add()),
+        AppString.subtitle_sheet_format_i, VillageFormat_I_Add(),CustomColor.dashboard_card_bg),
     ButtomMenu(
         AppString.title_sheet_format_ii,
         AppString.subtitle_sheet_format_ii,
-        VillageFormat_II_InfrastructureAdd()),
+        VillageFormat_II_InfrastructureAdd(),CustomColor.dashboard_card_bg),
     ButtomMenu(
         AppString.title_sheet_format_ii_a,
         AppString.subtitle_sheet_format_ii_a,
-        VillageFormat_III_HouseholdLevelDataAdd()),
+        VillageFormat_III_HouseholdLevelDataAdd(),CustomColor.dashboard_card_bg),
   ];
+/*
+No. of villages selected = 10
+No. of villages with infrastructure survey completed = 8
+Total households= 5000
+Completed Households Survey = 2500
+Incomplete Households Survey = 15
+
+*/
 
   final dashboard_done = [
     ButtomMenu(
-        "24",
-        "No of States covered", VillageFormat_I_Add()),
+        "10",
+        "No. of villages selected",
+        VillageFormat_I_Add(),
+        CustomColor.card_1
+
+    ),
     ButtomMenu(
-        "529",
-        "No. of Districts covered",
-        VillageFormat_II_InfrastructureAdd()),
+        "8",
+        "No. of villages with infrastructure survey completed",
+        VillageFormat_II_InfrastructureAdd(),CustomColor.card_2),
     ButtomMenu(
-        "529",
-        "No. of villages covered",
-        VillageFormat_II_InfrastructureAdd()),
+        "5000",
+        "Total households",
+        VillageFormat_II_InfrastructureAdd(),CustomColor.card_3),
     ButtomMenu(
-        "529",
-        "No. of Households",
-        VillageFormat_II_InfrastructureAdd()),
+        "2500",
+        "Completed Households Survey",
+        VillageFormat_II_InfrastructureAdd(),CustomColor.card_4),
     ButtomMenu(
-        "4,88,13,870",
-        "Total Population Covered",
-        VillageFormat_II_InfrastructureAdd()),
-    ButtomMenu(
-        "2,63,13,385",
-        "SC Population Covered",
-        VillageFormat_II_InfrastructureAdd()),
-    // ButtomMenu(
-    //     "18,061",
-    //     "No. of Villages infrastructure assessment initiated",
-    //     VillageFormat_II_InfrastructureAdd()),
-    // ButtomMenu(
-    //     "17,537",
-    //     "No. of Villages infrastructure assessment Completed",
-    //     VillageFormat_II_InfrastructureAdd()),
-    // ButtomMenu(
-    //     "2,41,312",
-    //     "No. of works identified for execution",
-    //     VillageFormat_II_InfrastructureAdd()),
+        "15",
+        "Incomplete Households Survey",
+        VillageFormat_II_InfrastructureAdd(),CustomColor.card_5),
 
   ];
 
@@ -157,14 +175,13 @@ class _DashBoardState extends State<DashBoard> {
               setState(() {
                 selectedPosition = 1;
               });
-
               launchUrl(Uri.parse(
                   'https://www.youtube.com/channel/UCvtZvyOHREh-7qO2q0ULNVw'));
             },
           ),
           TabItem(
             text: tabs[2],
-            icon: IconData(0xf22f, fontFamily: 'MaterialIcons'),
+            icon: Icons.account_circle,
             isSelected: selectedPosition == 2,
             onTap: () {
               setState(() {
@@ -186,12 +203,23 @@ class _DashBoardState extends State<DashBoard> {
           ),
           TabItem(
             text: tabs[4],
-            icon: Icons.menu,
+            icon: Icons.manage_accounts,
             isSelected: selectedPosition == 4,
+            onTap: () {
+
+              setState(() {
+                selectedPosition = 4;
+              });
+            },
+          ),
+          TabItem(
+            text: tabs[5],
+            icon: Icons.menu,
+            isSelected: selectedPosition == 5,
             onTap: () {
               _openBottomSheet();
               setState(() {
-                selectedPosition = 4;
+                selectedPosition = 5;
               });
             },
           ),
@@ -235,7 +263,7 @@ class _DashBoardState extends State<DashBoard> {
               margin: EdgeInsets.all(5.0),
               padding: EdgeInsets.all(5.0),
               width: MediaQuery.of(context).size.width,
-              decoration: GradientBGHoriz(),
+              decoration: GradientBGHorizColor(dashboard_done[index].backgroundColor,dashboard_done[index].backgroundColor),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
 
@@ -270,7 +298,7 @@ class _DashBoardState extends State<DashBoard> {
                                 dashboard_done[index].title,
                                 style: TextStyle(
                                     fontFamily: 'Calibri',
-                                    color: CustomColor.white,
+                                    color: CustomColor.black_dark,
                                     fontSize: FontSize.sp_15,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -278,9 +306,12 @@ class _DashBoardState extends State<DashBoard> {
                               Text(
                                 textAlign: TextAlign.left,
                                 dashboard_done[index].subTitle,
+                                maxLines:3,
                                 style: TextStyle(
+
+                                    overflow: TextOverflow.ellipsis,
                                     fontFamily: 'Calibri',
-                                    color: CustomColor.white,
+                                    color: CustomColor.black_dark,
                                     fontSize: FontSize.sp_15,
                                     fontWeight: FontWeight.bold),
                               )
@@ -363,15 +394,22 @@ class _DashBoardState extends State<DashBoard> {
                   FontSize.sp_18, CustomColor.white, FontWeight.bold),
             ),
             SizedBox(height: 5),
-            Text(
-              textAlign: TextAlign.center,
-              menu_buttom_sheet[index].subTitle,
-              style: TextStyle(
-                  fontFamily: 'Calibri',
-                  color: CustomColor.white,
-                  fontSize: FontSize.sp_13,
-                  fontWeight: FontWeight.bold),
-            )
+            ExpandableTextWidget(
+              text: menu_buttom_sheet[index].subTitle,
+              textStyle: TextStyle(
+                  fontSize: 18.00,
+                  color: CustomColor.white),
+              maxLines: 4,
+            ),
+            // Text(
+            //   textAlign: TextAlign.center,
+            //   menu_buttom_sheet[index].subTitle,
+            //   style: TextStyle(
+            //       fontFamily: 'Calibri',
+            //       color: CustomColor.white,
+            //       fontSize: FontSize.sp_13,
+            //       fontWeight: FontWeight.bold),
+            // )
           ],
         ),
       )
