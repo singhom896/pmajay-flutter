@@ -66,8 +66,9 @@ class AppString
 
 
   static String  title_nodal_officer_details ='Details of State Nodal Officer';
-  static String  user_name ='Login Id';
+  static String  enter_userid ='Enter UserID';
   static String  enter_captcha ='Enter Captcha';
+  static String  enter_wrong_captcha ='Oops! It seems like the captcha you entered is incorrect. Please try again.';
   static String  enter_password ='Enter Password';
   static String  bt_login ='Log In';
 
@@ -93,4 +94,13 @@ class AppString
    static String write_unicode_st = '\u{2713}';
   static String  capture_pick ='Pick/Capture Image';
   static String  Submit ='Submit';
+
+  static String please_check_login='Please check your login credentials';
+
+  static String pref_State='State';
+  static String pref_StateCode='StateCode';
+  static String pref_District='District';
+  static String pref_DistrictCode='DistrictCode';
+
+
 }

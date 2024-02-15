@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../locator.dart';
-import '../../network/viewmodel/MyProfileVM.dart';
+import '../../network/viewmodel/PmajayVM.dart';
 import '../../utills/ButtomMenu.dart';
 import '../../utills/FontSize.dart';
 import '../widget/CustomWidget.dart';
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     return MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (_) => MyProfileVM()),
+          ChangeNotifierProvider(create: (_) => PmajayVM()),
         ],
         child: MaterialApp(
           // theme: ThemeData(

@@ -7,7 +7,11 @@ import 'package:pmajay/utills/AppString.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../network/data/AddCommittee.dart';
-import '../../../../network/viewmodel/MyProfileVM.dart';
+import '../../../../network/remote/Status.dart';
+import '../../../../network/response/BlockListResponse.dart';
+import '../../../../network/response/GramListResponse.dart';
+import '../../../../network/viewmodel/PmajayVM.dart';
+import '../../../../utills/SharedPreferencesHelper.dart';
 import '../../../widget/DropDownFormField.dart';
 import '../../../widget/DynamicWidgets.dart';
 import '../../../../utills/CustomColor.dart';
@@ -58,6 +62,8 @@ class _village_format_i_addState extends State<VillageFormat_I_Add> {
   @override
   void initState() {
     super.initState();
+    initview();
+    getsharePref();
     _myActivity = '';
     _myActivityResult = '';
     clickevent = false;
@@ -66,6 +72,46 @@ class _village_format_i_addState extends State<VillageFormat_I_Add> {
     _startLocationUpdates();
     setDataList();
   }
+  Future<void>initview()
+  async {
+    blocklist.add(BlockResult(BlockCode:'0',BlockName:'--Select Block---'));
+    selectblockvalue=blocklist[0];
+
+    gramlist.insert(
+      0,
+      GramResult(GpCode:'',GpName:'--Select GramPanchayat--'),
+    );
+    selectGramvalue = gramlist[0];
+  }
+  late final viewmodelListner;
+  late  String State="";
+  late  String StateCode="";
+  late  String District="";
+  late  String DistrictCode="";
+  Future<void> getsharePref() async {
+    String? _State =    await SharedPreferencesHelper.getPreferance(AppString.pref_State);
+    String? _StateCode =    await SharedPreferencesHelper.getPreferance(AppString.pref_StateCode);
+    String? _District =    await SharedPreferencesHelper.getPreferance(AppString.pref_District);
+    String? _DistrictCode =    await SharedPreferencesHelper.getPreferance(AppString.pref_DistrictCode);
+
+    setState(() {
+      State = _State??"";
+      StateCode = _StateCode??"";
+      District = _District??"";
+      DistrictCode = _DistrictCode??"";
+
+    });
+    viewmodelListner = Provider.of<PmajayVM>(context, listen: false);
+
+    viewmodelListner.addListener(allBlockList);
+    viewmodelListner.addListener(allGramList);
+
+
+    viewmodelListner.getBlockList('', DistrictCode!);
+
+
+  }
+  bool isLoading = true;
 
   Future<void> setDataList() async {
     var data_add = AddCommittee(
@@ -77,17 +123,100 @@ class _village_format_i_addState extends State<VillageFormat_I_Add> {
         Remark: '');
     committeeListData.add(data_add);
 
-    Provider.of<MyProfileVM>(context, listen: false).setAddCommitteeList =
+    Provider.of<PmajayVM>(context, listen: false).setAddCommitteeList =
         committeeListData;
     committeeListData =
-        Provider.of<MyProfileVM>(context, listen: false).getCommitteeList;
+        Provider.of<PmajayVM>(context, listen: false).getCommitteeList;
   }
+
+  void allBlockList() {
+    if (viewmodelListner.bloackMain.status == Status.LOADING) {
+      setState(() {
+        isLoading = true;
+      }); // Update the UI if necessary
+    }
+
+    if (viewmodelListner.bloackMain.status == Status.ERROR) {}
+    if (viewmodelListner.bloackMain.status == Status.COMPLETED)
+    {
+      if (viewmodelListner.bloackMain.data.response.status == true )
+      {
+        setState(() {
+          isLoading = false;
+        }); // Update the UI if necessary
+
+        blocklist.clear();
+        // blocklist.add(BlockResult(BlockCode:'',BlockName:'--Select Block---'));
+        blocklist.addAll(viewmodelListner.bloackMain.data.response.dataResult);
+        blocklist.removeAt(0);
+        blocklist.insert(
+          0,
+          BlockResult(BlockCode:'',BlockName:'--Select Block---'),
+        );
+        selectblockvalue = blocklist[0];
+        viewmodelListner.removeListener(allBlockList);
+        setState(() {
+
+        });
+
+      } else {
+        setState(() {
+          isLoading = false;
+        }); // Update the UI if necessary
+      }
+    }
+  }
+  void allGramList() {
+    if (viewmodelListner.gramMain.status == Status.LOADING) {
+      setState(() {
+        isLoading = true;
+      }); // Update the UI if necessary
+    }
+
+    if (viewmodelListner.gramMain.status == Status.ERROR) {}
+    if (viewmodelListner.gramMain.status == Status.COMPLETED)
+    {
+      if (viewmodelListner.gramMain.data.response.status == true )
+      {
+        setState(() {
+          isLoading = false;
+        }); // Update the UI if necessary
+
+        gramlist.clear();
+        // blocklist.add(BlockResult(BlockCode:'',BlockName:'--Select Block---'));
+        gramlist.addAll(viewmodelListner.gramMain.data.response.dataResult);
+        // gramlist.removeAt(0);
+        gramlist.insert(
+          0,
+          GramResult(GpCode:'',GpName:'--Select GramPanchayat--'),
+        );
+        selectGramvalue = gramlist[0];
+        viewmodelListner.removeListener(allGramList);
+        setState(() {
+
+        });
+
+      } else {
+        setState(() {
+          isLoading = false;
+        }); // Update the UI if necessary
+      }
+    }
+  }
+  late BlockResult selectblockvalue;
+
+  List<BlockResult> blocklist = [];
+  List<GramResult> gramlist = [];
+  late GramResult selectGramvalue;
+  List<Map<String, dynamic>> blocklistAsMap=[];
 
   List<AddCommittee?> committeeListData = [];
 
   @override
   void dispose() {
     _stopLocationUpdates();
+    viewmodelListner.removeListener(allBlockList);
+    viewmodelListner.removeListener(allGramList);
     super.dispose();
   }
 
@@ -317,86 +446,135 @@ class _village_format_i_addState extends State<VillageFormat_I_Add> {
                                         },
                                       ),
                                     ),
+
                                     Container(
-                                      child: GestureDetector(
-                                        behavior: HitTestBehavior.opaque,
-                                        onTap: () {
-                                          setState(() {
-                                            clickevent = true;
-                                          });
-                                        },
-                                        child: DropDownFormField(
-                                          titleText: 'Block',
-                                          hintText: ' --Select---',
-                                          value: _myActivity,
-                                          onSaved: (value) {
-                                            setState(() {
-                                              _myActivity = value;
-                                            });
-                                          },
-                                          onChanged: (value) {
-                                            setState(() {
-                                              _myActivity = value;
-                                            });
-                                          },
-                                          dataSource: [
-                                            {
-                                              "display": "--Select Block---",
-                                              "value": "--Select Block---",
-                                            },
-                                            {
-                                              "display": "Delhi W East",
-                                              "value": "Delhi W East",
-                                            },
-                                          ],
-                                          textField: 'display',
-                                          valueField: 'value',
-                                          validator: (value) {},
-                                          context: context,
-                                          onTabClick: clickevent,
-                                        ),
+                                      child: Stack(
+                                        children: <Widget>[
+                                          Container(
+                                            margin: EdgeInsets.only( top: 9),
+                                            height: 65,
+                                            child: DropdownButtonFormField(
+                                              decoration: InputDecoration(
+                                                enabledBorder: OutlineInputBorder( //<-- SEE HERE
+                                                  borderSide: BorderSide(color: Colors.green.withOpacity(0.5), width: 2),
+                                                ),
+                                                focusedBorder: OutlineInputBorder( //<-- SEE HERE
+                                                  borderSide: BorderSide(color: CustomColor.drawer_bg.withOpacity(0.5), width: 2),
+                                                ),
+                                                filled: true,
+                                                fillColor: Colors.white,
+                                              ),
+                                              dropdownColor: Colors.white,
+                                              value: selectblockvalue,
+                                              onChanged: (BlockResult? newValue) {
+                                                setState(() {
+                                                  selectblockvalue = newValue!;
+                                                });
+                                                if (selectblockvalue.BlockName != '--Select Block---')
+                                                {
+
+                                                  viewmodelListner.getGramList('', selectblockvalue.BlockCode!);
+                                                }
+
+                                              },
+                                              items: blocklist.map<DropdownMenuItem<BlockResult>>((BlockResult value) {
+                                                return DropdownMenuItem<BlockResult>(
+                                                  value: value,
+                                                  child: Text(
+                                                    value.BlockName??"",
+                                                    style: TextStyle(fontSize: FontSize.sp_15),
+                                                  ),
+                                                );
+                                              }).toList(),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            left: 10,
+                                            top: 3,
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(horizontal: 3),
+                                              color: Colors.white,
+                                              child: RichText(
+                                                text: TextSpan(
+                                                  text: 'Block',
+                                                  style: TextStyle(color: Colors.black),
+                                                  /*defining default style is optional */
+                                                  children: <TextSpan>[
+                                                    TextSpan(
+                                                        text: ' *',
+                                                        style: TextStyle(fontWeight: FontWeight.bold,color:  Colors.red)),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+
+                                        ],
                                       ),
                                     ),
+
                                     Container(
-                                      child: GestureDetector(
-                                        behavior: HitTestBehavior.opaque,
-                                        onTap: () {
-                                          setState(() {
-                                            clickevent = true;
-                                          });
-                                        },
-                                        child: DropDownFormField(
-                                          titleText: 'Gram Panchayat',
-                                          hintText: ' --Select---',
-                                          value: _myActivity,
-                                          onSaved: (value) {
-                                            setState(() {
-                                              _myActivity = value;
-                                            });
-                                          },
-                                          onChanged: (value) {
-                                            setState(() {
-                                              _myActivity = value;
-                                            });
-                                          },
-                                          dataSource: [
-                                            {
-                                              "display": "--Select Block---",
-                                              "value": "--Select Block---",
-                                            },
-                                            {
-                                              "display": "Delhi W East",
-                                              "value": "Delhi W East",
-                                            },
-                                          ],
-                                          textField: 'display',
-                                          valueField: 'value',
-                                          validator: (value) {},
-                                          context: context,
-                                          onTabClick: clickevent,
-                                        ),
+                                      child: Stack(
+                                        children: <Widget>[
+                                          Container(
+                                            margin: EdgeInsets.only( top: 9),
+                                            height: 65,
+                                            child: DropdownButtonFormField(
+                                              decoration: InputDecoration(
+                                                enabledBorder: OutlineInputBorder( //<-- SEE HERE
+                                                  borderSide: BorderSide(color: Colors.green.withOpacity(0.5), width: 2),
+                                                ),
+                                                focusedBorder: OutlineInputBorder( //<-- SEE HERE
+                                                  borderSide: BorderSide(color: CustomColor.drawer_bg.withOpacity(0.5), width: 2),
+                                                ),
+                                                filled: true,
+                                                fillColor: Colors.white,
+                                              ),
+                                              dropdownColor: Colors.white,
+                                              value: selectGramvalue,
+                                              onChanged: (GramResult? newValue) {
+                                                setState(() {
+                                                  selectGramvalue = newValue!;
+                                                });
+
+                                              },
+                                              items: gramlist.map<DropdownMenuItem<GramResult>>((GramResult value) {
+                                                return DropdownMenuItem<GramResult>(
+                                                  value: value,
+                                                  child: Text(
+                                                    value.GpName??"",
+                                                    style: TextStyle(fontSize: FontSize.sp_15),
+                                                  ),
+                                                );
+                                              }).toList(),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            left: 10,
+                                            top: 3,
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(horizontal: 3),
+                                              color: Colors.white,
+                                              child: RichText(
+                                                text: TextSpan(
+                                                  text: 'Gram Panchayat',
+                                                  style: TextStyle(color: Colors.black),
+                                                  /*defining default style is optional */
+                                                  children: <TextSpan>[
+                                                    TextSpan(
+                                                        text: ' *',
+                                                        style: TextStyle(fontWeight: FontWeight.bold,color:  Colors.red)),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+
+                                        ],
                                       ),
                                     ),
+
+
                                     Container(
                                       child: GestureDetector(
                                         behavior: HitTestBehavior.opaque,
@@ -1386,10 +1564,10 @@ class _AddDataDialogState extends State<AddDataDialog> {
                 Address: address.text,
                 Remark: remark.text);
             List<AddCommittee?> data_list =
-                Provider.of<MyProfileVM>(context, listen: false)
+                Provider.of<PmajayVM>(context, listen: false)
                     .getCommitteeList;
             data_list.add(saveData);
-            Provider.of<MyProfileVM>(context, listen: false)
+            Provider.of<PmajayVM>(context, listen: false)
                 .setAddCommitteeList = data_list;
             Navigator.of(context).pop(); // Close the dialog
           },

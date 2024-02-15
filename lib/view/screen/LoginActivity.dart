@@ -1,15 +1,20 @@
 import 'dart:io' show Platform;
 import 'dart:math';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pmajay/view/screen/DashBoard.dart';
 
 import 'package:provider/provider.dart';
 
+import '../../firebase/firebase_options.dart';
+import '../../locator.dart';
 import '../../network/remote/Status.dart';
-import '../../network/viewmodel/MyProfileVM.dart';
+import '../../network/response/LoginResponse.dart';
+import '../../network/viewmodel/PmajayVM.dart';
 import '../../utills/AppString.dart';
 import '../../utills/CustomColor.dart';
 import '../widget/CustomWidget.dart';
@@ -21,28 +26,45 @@ import '../widget/TermsCondition.dart';
 import '../widget/LoaderWidget.dart';
 import 'ComponentActivity.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  setupLocator();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-// This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
-        useMaterial3: true,
-      ),
-      home: LoginActivity(
-        userType: '',
-        LoginTitle: '',
-      ),
-    );
+    final textTheme = Theme.of(context).textTheme;
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => PmajayVM()),
+        ],
+        child: MaterialApp(
+          // theme: ThemeData(
+          //   primaryColor: CustomColor.white,
+          //   primaryColorDark: CustomColor.white,// Define the primary color
+          //   iconTheme: IconThemeData(color: Colors.white),
+          // ),
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: CustomColor.white),
+            useMaterial3: true,
+            textTheme: GoogleFonts.latoTextTheme(textTheme).copyWith(
+              bodyMedium: GoogleFonts.roboto(textStyle: textTheme.bodyMedium),
+            ),
+          ),
+          debugShowCheckedModeBanner: false,
+          // initialRoute: Routes.initialRoute,
+          // routes: Routes.routes,
+          home: LoginActivity(userType: 'AdarshGram', LoginTitle: 'AdarshGram',),
+          //home: YourScreen(),
+          // home: PortraitLandscapePlayerPage(),
+          routes: {
+            // When navigating to the "/" route, build the FirstScreen widget.
+            '/DashBoard': (context) => LoginActivity(userType: 'AdarshGram', LoginTitle: 'AdarshGram',),
+          },
+        ));
   }
 }
 
@@ -65,7 +87,7 @@ class _LoginActivityState extends State<LoginActivity>
 
   final TextEditingController _userNameTextCont = TextEditingController();
   final TextEditingController _passwordTextCont = TextEditingController();
-  final TextEditingController _usercaptchaCont = TextEditingController();
+   final TextEditingController _usercaptchaCont = TextEditingController();
 
   bool _isNameEmpty = true;
   bool _isPassEmpty = true;
@@ -80,7 +102,7 @@ class _LoginActivityState extends State<LoginActivity>
   bool _obscured = true;
   String randomString = "";
   bool isVerified = false;
-  TextEditingController captcha_controller = TextEditingController();
+
 
 // Logic for creating Captcha
   void buildCaptcha() {
@@ -106,7 +128,7 @@ class _LoginActivityState extends State<LoginActivity>
       vsync: this,
       duration: Duration(milliseconds: 500),
     );
-    viewModelListner = Provider.of<MyProfileVM>(context, listen: false);
+    viewModelListner = Provider.of<PmajayVM>(context, listen: false);
     viewModelListner.addListener(userLoginListner);
     // Listen to changes in the text field
 
@@ -183,25 +205,33 @@ class _LoginActivityState extends State<LoginActivity>
       //   isLoading = false;
       // });
 
-      if (viewModelListner.loginMain.data.response_code == 200 &&
-          viewModelListner.loginMain.data.message == "success" &&
-          viewModelListner.loginMain.data.response.apistatus == "success") {
+      if (viewModelListner.loginMain.data.response.status == true )
+      {
         Future.delayed(const Duration(seconds: 2)).then((value) {
           setState(() {
             isLoading = false;
           });
-          var authkey = viewModelListner.loginMain.data.response.authkey;
-          var UserType = viewModelListner.loginMain.data.response.r_type;
-          var Name = viewModelListner.loginMain.data.response.r_username;
+          var message = viewModelListner.loginMain.data.response.message;
+          List<DataResult>? dataResult=[];
+          dataResult=viewModelListner.loginMain.data.response.dataResult;
+          var State = viewModelListner.loginMain.data.response.dataResult[0].state;
+          var StateCode = viewModelListner.loginMain.data.response.dataResult[0].stateCode;
+          var District = viewModelListner.loginMain.data.response.dataResult[0].district;
+          var DistrictCode = viewModelListner.loginMain.data.response.dataResult[0].districtCode;
 
-          // SharedPreferencesHelper.saveAuthKey(authkey!);
-          // SharedPreferencesHelper.saveUserType(UserType!);
-          // SharedPreferencesHelper.savePreferance('Name', Name!);
+          SharedPreferencesHelper.savePref(AppString.pref_State,State);
+          SharedPreferencesHelper.savePref(AppString.pref_StateCode,StateCode);
+          SharedPreferencesHelper.savePref(AppString.pref_District,District);
+          SharedPreferencesHelper.savePref(AppString.pref_DistrictCode,DistrictCode);
+          SharedPreferencesHelper.savePref('userlogin','Login');
           if (mounted) {
-            // Navigator.pushReplacement(
-            //   context,
-            //   MaterialPageRoute(builder: (context) => MainActivity()),
-            // );
+
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => DashBoard()),
+            );
+
           }
         });
 
@@ -210,7 +240,13 @@ class _LoginActivityState extends State<LoginActivity>
         setState(() {
           isLoading = false;
         });
-        // CustomToast.showToastMessage(AppString.please_check_login);
+
+          Utils.flushBarErrorMessage(
+              AppString.please_check_login,
+              context,
+              flushBarKey);
+
+
       }
     }
   }
@@ -257,7 +293,7 @@ class _LoginActivityState extends State<LoginActivity>
 
   @override
   Widget build(BuildContext context) {
-    final viewModelMain = Provider.of<MyProfileVM>(context);
+    final viewModelMain = Provider.of<PmajayVM>(context);
     Widget circleProcessbar = Container(
         margin: const EdgeInsets.only(
           top: 250,
@@ -393,7 +429,7 @@ class _LoginActivityState extends State<LoginActivity>
                                         child: TextField(
                                           controller: _userNameTextCont,
                                           decoration: InputDecoration(
-                                            hintText: AppString.user_name,
+                                            hintText: AppString.enter_userid,
                                             border: InputBorder.none,
                                             labelStyle: TextStyle(
                                               color: CustomColor.drawer_header_bg,
@@ -695,66 +731,57 @@ class _LoginActivityState extends State<LoginActivity>
                               )),
                           InkWell(
                             onTap: () {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => DashBoard()),
-                              );
-                              return;
-                              String user_name =
-                              _userNameTextCont.text.trim();
+
+                              String user_name =_userNameTextCont.text.trim();
                               String password = _passwordTextCont.text.trim();
 
                               ///api call
 
-                              if (user_name == null || user_name.isEmpty) {
-                                Utils.flushBarErrorMessage(
-                                    AppString.enter_user_name,
-                                    context,
-                                    flushBarKey);
-
-                                return;
-                              }
-                              if (password == null || password.isEmpty) {
-                                Utils.flushBarErrorMessage(
-                                    AppString.enter_user_pass,
-                                    context,
-                                    flushBarKey);
-
-                                return;
-                              }
-
-                              if (captcha_controller.text == null ||
-                                  captcha_controller.text.isEmpty) {
-                                Utils.flushBarErrorMessage(
-                                    AppString.enter_captcha,
-                                    context,
-                                    flushBarKey);
-
-                                return;
-                              }
-                              isVerified =
-                                  captcha_controller.text == randomString;
-                              setState(() {});
-                              if (!isVerified) {
-                                Utils.flushBarErrorMessage(
-                                    AppString.enter_captcha,
-                                    context,
-                                    flushBarKey);
-
-                                return;
-                              }
+                              // if (user_name == null || user_name.isEmpty) {
+                              //   Utils.flushBarErrorMessage(
+                              //       AppString.enter_userid,
+                              //       context,
+                              //       flushBarKey);
+                              //
+                              //   return;
+                              // }
+                              // if (password == null || password.isEmpty) {
+                              //   Utils.flushBarErrorMessage(
+                              //       AppString.enter_password,
+                              //       context,
+                              //       flushBarKey);
+                              //
+                              //   return;
+                              // }
+                              //
+                              // if (_usercaptchaCont.text == null ||
+                              //     _usercaptchaCont.text.isEmpty) {
+                              //   Utils.flushBarErrorMessage(
+                              //       AppString.enter_captcha,
+                              //       context,
+                              //       flushBarKey);
+                              //
+                              //   return;
+                              // }
+                              // isVerified = _usercaptchaCont.text == randomString;
+                              // setState(() {});
+                              // if (!isVerified)
+                              // {
+                              //   Utils.flushBarErrorMessage(
+                              //       AppString.enter_wrong_captcha,
+                              //       context,
+                              //       flushBarKey);
+                              //
+                              //   return;
+                              // }
 
                               TextInput.finishAutofillContext();
 
-                              // viewModelMain.userLoginApi(
-                              //     base_url,
-                              //     user_name,
-                              //     password,
-                              //     deviceid,
-                              //     devicetype,
-                              //     widget.userType,
-                              //     deviceToken);
+                              viewModelMain.userLoginApi(
+                                  base_url,
+                                  user_name,
+                                  password,
+                                 );
                             },
 
                             child: Align(

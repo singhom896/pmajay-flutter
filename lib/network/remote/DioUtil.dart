@@ -125,6 +125,21 @@ class DioUtil {
       throw error;
     }
   }
+
+
+  Future<Response> getRequest(String endpoint) async {
+    try {
+      // final Map<String, String> headers = {
+      //   'Authorization': 'bearer 8d6afd2f3f5e8c735ac49b45688531dd',
+      //   'Accept': 'application/json',
+      // };
+      // _dio.options.headers=headers;
+      final response = await _dio.get(endpoint);
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 

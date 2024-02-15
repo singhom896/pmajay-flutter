@@ -12,7 +12,7 @@ import 'package:pmajay/utills/FontSize.dart';
 import 'package:provider/provider.dart';
 import '../../locator.dart';
 import '../../network/data/SaveCameraLatLong.dart';
-import '../../network/viewmodel/MyProfileVM.dart';
+import '../../network/viewmodel/PmajayVM.dart';
 import '../../utills/AppString.dart';
 import '../../utills/CustomColor.dart';
 import 'package:permission_handler/permission_handler.dart'
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     return MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (_) => MyProfileVM()),
+          ChangeNotifierProvider(create: (_) => PmajayVM()),
         ],
         child: MaterialApp(
           // theme: ThemeData(
@@ -230,7 +230,7 @@ class _CameraActivityState extends State<CameraActivity> {
                     final image = await controller!.takePicture(); //capture image
                     FilePath = image?.path ?? "";
                     var saveData = SaveCameraLatLong(profilePath: FilePath, latitude: latitude,longitude: longitude);
-                    Provider.of<MyProfileVM>(context, listen: false) .setCameraPick = saveData;
+                    Provider.of<PmajayVM>(context, listen: false) .setCameraPick = saveData;
                     setState(() {});
                     Navigator.push(
                         context, MaterialPageRoute(builder: (context) => ShowData()));
@@ -322,7 +322,7 @@ class ShowData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SaveCameraLatLong? saveData =
-        Provider.of<MyProfileVM>(context, listen: false).getSaveData;
+        Provider.of<PmajayVM>(context, listen: false).getSaveData;
 
     return Scaffold(
       appBar: AppBar(

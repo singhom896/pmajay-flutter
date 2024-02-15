@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 
 import 'firebase/firebase_options.dart';
 import 'locator.dart';
-import 'network/viewmodel/MyProfileVM.dart';
+import 'network/viewmodel/PmajayVM.dart';
 
 
 final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     return MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (_) => MyProfileVM()),
+          ChangeNotifierProvider(create: (_) => PmajayVM()),
 
 
         ],

@@ -1,11 +1,11 @@
 
 
-class LoginResponse {
+class BlockListResponse {
   Response? response;
 
-  LoginResponse({this.response});
+  BlockListResponse({this.response});
 
-  LoginResponse.fromJson(Map<String, dynamic> json) {
+  BlockListResponse.fromJson(Map<String, dynamic> json) {
     response = json['response'] != null
         ? new Response.fromJson(json['response'])
         : null;
@@ -22,7 +22,7 @@ class LoginResponse {
 }
 
 class Response {
-  List<DataResult>? dataResult=[];
+  List<BlockResult>? dataResult=[];
   String? message;
   bool? status;
 
@@ -33,7 +33,7 @@ class Response {
     if (json['data_result'] != null)
     {
       json['data_result'].forEach((v) {
-        dataResult!.add(new DataResult.fromJson(v));
+        dataResult!.add(new BlockResult.fromJson(v));
       });
     }
     message = json['message'];
@@ -51,27 +51,26 @@ class Response {
   }
 }
 
-class DataResult {
-  String? state;
-  String? stateCode;
-  String? district;
-  String? districtCode;
+class BlockResult {
 
-  DataResult({this.state, this.stateCode, this.district, this.districtCode});
 
-  DataResult.fromJson(Map<String, dynamic> json) {
-    state = json['State'];
-    stateCode = json['StateCode'];
-    district = json['District'];
-    districtCode = json['DistrictCode'];
+  String? BlockCode;
+  String? BlockName;
+
+
+  BlockResult({this.BlockCode, this.BlockName});
+
+  BlockResult.fromJson(Map<String, dynamic> json) {
+    BlockCode = json['BlockCode'];
+    BlockName = json['BlockName'];
+
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['State'] = this.state;
-    data['StateCode'] = this.stateCode;
-    data['District'] = this.district;
-    data['DistrictCode'] = this.districtCode;
+    data['BlockCode'] = this.BlockCode;
+    data['BlockName'] = this.BlockName;
+
     return data;
   }
 }

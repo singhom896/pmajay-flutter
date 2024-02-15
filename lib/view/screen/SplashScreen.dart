@@ -36,9 +36,9 @@ class _splash_screenState extends State<splash_screen> {
       // Navigator.pushReplacement(
       //     context, MaterialPageRoute(builder: (context) => DashBoard()));
 
-      String? _authkey = await SharedPreferencesHelper.getAuthKey();
+      String? userLogin = await SharedPreferencesHelper.getuserLogin();
 
-      if (_authkey != null && _authkey != "")
+      if (userLogin != null && userLogin != "")
       {
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => DashBoard()));
