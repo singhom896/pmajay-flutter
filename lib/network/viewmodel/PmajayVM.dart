@@ -13,6 +13,7 @@ import '../repository/MainRepoImp.dart';
 import '../response/BlockListResponse.dart';
 import '../response/GramListResponse.dart';
 import '../response/LoginResponse.dart';
+import '../response/VillageListResponse.dart';
 
 
 
@@ -79,7 +80,7 @@ class PmajayVM extends ChangeNotifier {
   Future<void>getBlockList(String BaseUrl, String DistrictCode) async
   {
 
-    _setUserLogin(ApiResponse.loading());
+    _setBlockList(ApiResponse.loading());
     _myRepo.getBlockList( BaseUrl,  DistrictCode).then((value) =>
         _setBlockList(ApiResponse.completed(value)))
 
@@ -98,12 +99,32 @@ class PmajayVM extends ChangeNotifier {
   Future<void>getGramList(String BaseUrl, String BlockCode) async
   {
 
-    _setUserLogin(ApiResponse.loading());
+    _setGramList(ApiResponse.loading());
     _myRepo.getGramList( BaseUrl,  BlockCode).then((value) =>
         _setGramList(ApiResponse.completed(value)))
 
         .onError((error, stackTrace) =>
         _setGramList(ApiResponse.error(error.toString())));
+
+  }
+
+
+  ApiResponse<VillageListResponse> villageMain = ApiResponse.loading();
+  void _setVillageList(ApiResponse<VillageListResponse> response)
+  {
+    print("TAG :: $response");
+    villageMain = response;
+    notifyListeners();
+  }
+  Future<void>getVillageList(String BaseUrl, String BlockCode) async
+  {
+
+    _setVillageList(ApiResponse.loading());
+    _myRepo.getVillageList( BaseUrl,  BlockCode).then((value) =>
+        _setVillageList(ApiResponse.completed(value)))
+
+        .onError((error, stackTrace) =>
+        _setVillageList(ApiResponse.error(error.toString())));
 
   }
 }

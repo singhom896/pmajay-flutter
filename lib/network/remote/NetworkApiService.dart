@@ -126,5 +126,24 @@ class NetworkApiService extends BaseApiService {
     return responseJson;
   }
 
+  @override
+  Future getVillageList(String BaseUrl, String BlockCode) async {
+    dynamic responseJson;
+    try {
+      final apiService = DioUtil(baseUrl);
+      Response dioResponse = await apiService.getRequest(
+          "/getVillage.php?gpcode=${BlockCode}");
+
+      final httpResponseBody = dioResponse.toString();
+      final httpResponse =
+      http.Response(httpResponseBody, dioResponse.statusCode ?? 403);
+
+      responseJson = returnResponse(httpResponse);
+    } on SocketException {
+      throw FetchDataException('No Internet Connection');
+    }
+    return responseJson;
+  }
+
 
 }

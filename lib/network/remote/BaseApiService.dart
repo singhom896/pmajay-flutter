@@ -15,12 +15,9 @@ abstract class BaseApiService {
 
   Future<dynamic> getResponse(String url);
 
-
-
   // socialjustice
   Future<dynamic> getUserLogin(String BaseUrl, String UserId,String Password);
-
   Future<dynamic> getBlockList(String BaseUrl, String DistrictCode);
-
   Future<dynamic> getGramList(String BaseUrl, String BlockCode);
+  Future<dynamic> getVillageList(String BaseUrl, String gpcode);
 }

@@ -9,6 +9,7 @@ import '../remote/NetworkApiService.dart';
 import '../response/BlockListResponse.dart';
 import '../response/GramListResponse.dart';
 import '../response/LoginResponse.dart';
+import '../response/VillageListResponse.dart';
 
 
 class MainRepoImp {
@@ -63,6 +64,24 @@ class MainRepoImp {
       dynamic response = await _apiService.getGramList(  BaseUrl, BlockCode);
 
       final   jsonData = GramListResponse.fromJson(response);
+      // final   jsonData="";
+
+      return jsonData;
+    } catch (e)
+    {
+      throw e;
+
+    }
+  }
+
+  @override
+  Future<VillageListResponse> getVillageList(String BaseUrl, String gpcode ) async
+  {
+
+    try {
+      dynamic response = await _apiService.getVillageList(  BaseUrl, gpcode);
+
+      final   jsonData = VillageListResponse.fromJson(response);
       // final   jsonData="";
 
       return jsonData;

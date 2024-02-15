@@ -10,6 +10,7 @@ import '../../../../network/data/AddCommittee.dart';
 import '../../../../network/remote/Status.dart';
 import '../../../../network/response/BlockListResponse.dart';
 import '../../../../network/response/GramListResponse.dart';
+import '../../../../network/response/VillageListResponse.dart';
 import '../../../../network/viewmodel/PmajayVM.dart';
 import '../../../../utills/SharedPreferencesHelper.dart';
 import '../../../widget/DropDownFormField.dart';
@@ -82,6 +83,13 @@ class _village_format_i_addState extends State<VillageFormat_I_Add> {
       GramResult(GpCode:'',GpName:'--Select GramPanchayat--'),
     );
     selectGramvalue = gramlist[0];
+
+    villagelist.insert(
+      0,
+      VillageResult(VillageCode:'',VillageName:'--Select Village Name--'),
+    );
+    selectvillagealue = villagelist[0];
+
   }
   late final viewmodelListner;
   late  String State="";
@@ -105,7 +113,7 @@ class _village_format_i_addState extends State<VillageFormat_I_Add> {
 
     viewmodelListner.addListener(allBlockList);
     viewmodelListner.addListener(allGramList);
-
+    viewmodelListner.addListener(allVillageList);
 
     viewmodelListner.getBlockList('', DistrictCode!);
 
@@ -191,7 +199,7 @@ class _village_format_i_addState extends State<VillageFormat_I_Add> {
           GramResult(GpCode:'',GpName:'--Select GramPanchayat--'),
         );
         selectGramvalue = gramlist[0];
-        viewmodelListner.removeListener(allGramList);
+        // viewmodelListner.removeListener(allGramList);
         setState(() {
 
         });
@@ -203,11 +211,54 @@ class _village_format_i_addState extends State<VillageFormat_I_Add> {
       }
     }
   }
+
+  void allVillageList()
+  {
+    if (viewmodelListner.villageMain.status == Status.LOADING) {
+      setState(() {
+        isLoading = true;
+      }); // Update the UI if necessary
+    }
+
+    if (viewmodelListner.villageMain.status == Status.ERROR) {}
+    if (viewmodelListner.villageMain.status == Status.COMPLETED)
+    {
+      if (viewmodelListner.villageMain.data.response.status == true )
+      {
+        setState(() {
+          isLoading = false;
+        }); // Update the UI if necessary
+
+        villagelist.clear();
+        // blocklist.add(BlockResult(BlockCode:'',BlockName:'--Select Block---'));
+        villagelist.addAll(viewmodelListner.villageMain.data.response.dataResult);
+        // gramlist.removeAt(0);
+        villagelist.insert(
+          0,
+          VillageResult(VillageCode:'',VillageName:'--Select Village Name--'),
+        );
+        selectvillagealue = villagelist[0];
+        // viewmodelListner.removeListener(allGramList);
+        setState(() {
+
+        });
+
+      } else {
+        setState(() {
+          isLoading = false;
+        }); // Update the UI if necessary
+      }
+    }
+  }
+
   late BlockResult selectblockvalue;
 
   List<BlockResult> blocklist = [];
   List<GramResult> gramlist = [];
   late GramResult selectGramvalue;
+
+  List<VillageResult> villagelist = [];
+  late VillageResult selectvillagealue;
   List<Map<String, dynamic>> blocklistAsMap=[];
 
   List<AddCommittee?> committeeListData = [];
@@ -217,6 +268,7 @@ class _village_format_i_addState extends State<VillageFormat_I_Add> {
     _stopLocationUpdates();
     viewmodelListner.removeListener(allBlockList);
     viewmodelListner.removeListener(allGramList);
+    viewmodelListner.removeListener(allVillageList);
     super.dispose();
   }
 
@@ -446,7 +498,6 @@ class _village_format_i_addState extends State<VillageFormat_I_Add> {
                                         },
                                       ),
                                     ),
-
                                     Container(
                                       child: Stack(
                                         children: <Widget>[
@@ -537,6 +588,12 @@ class _village_format_i_addState extends State<VillageFormat_I_Add> {
                                                   selectGramvalue = newValue!;
                                                 });
 
+                                                if (selectGramvalue.GpName != '--Select GramPanchayat--')
+                                                {
+
+                                                  viewmodelListner.getVillageList('', selectGramvalue.GpCode!);
+                                                }
+
                                               },
                                               items: gramlist.map<DropdownMenuItem<GramResult>>((GramResult value) {
                                                 return DropdownMenuItem<GramResult>(
@@ -573,46 +630,64 @@ class _village_format_i_addState extends State<VillageFormat_I_Add> {
                                         ],
                                       ),
                                     ),
-
-
                                     Container(
-                                      child: GestureDetector(
-                                        behavior: HitTestBehavior.opaque,
-                                        onTap: () {
-                                          setState(() {
-                                            clickevent = true;
-                                          });
-                                        },
-                                        child: DropDownFormField(
-                                          titleText: 'Village',
-                                          hintText: ' --Select---',
-                                          value: _myActivity,
-                                          onSaved: (value) {
-                                            setState(() {
-                                              _myActivity = value;
-                                            });
-                                          },
-                                          onChanged: (value) {
-                                            setState(() {
-                                              _myActivity = value;
-                                            });
-                                          },
-                                          dataSource: [
-                                            {
-                                              "display": "--Select Block---",
-                                              "value": "--Select Block---",
-                                            },
-                                            {
-                                              "display": "Delhi W East",
-                                              "value": "Delhi W East",
-                                            },
-                                          ],
-                                          textField: 'display',
-                                          valueField: 'value',
-                                          validator: (value) {},
-                                          context: context,
-                                          onTabClick: clickevent,
-                                        ),
+                                      child: Stack(
+                                        children: <Widget>[
+                                          Container(
+                                            margin: EdgeInsets.only( top: 9),
+                                            height: 65,
+                                            child: DropdownButtonFormField(
+                                              decoration: InputDecoration(
+                                                enabledBorder: OutlineInputBorder( //<-- SEE HERE
+                                                  borderSide: BorderSide(color: Colors.green.withOpacity(0.5), width: 2),
+                                                ),
+                                                focusedBorder: OutlineInputBorder( //<-- SEE HERE
+                                                  borderSide: BorderSide(color: CustomColor.drawer_bg.withOpacity(0.5), width: 2),
+                                                ),
+                                                filled: true,
+                                                fillColor: Colors.white,
+                                              ),
+                                              dropdownColor: Colors.white,
+                                              value: selectvillagealue,
+                                              onChanged: (VillageResult? newValue) {
+                                                setState(() {
+                                                  selectvillagealue = newValue!;
+                                                });
+
+                                              },
+                                              items: villagelist.map<DropdownMenuItem<VillageResult>>((VillageResult value) {
+                                                return DropdownMenuItem<VillageResult>(
+                                                  value: value,
+                                                  child: Text(
+                                                    value.VillageName??"",
+                                                    style: TextStyle(fontSize: FontSize.sp_15),
+                                                  ),
+                                                );
+                                              }).toList(),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            left: 10,
+                                            top: 3,
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(horizontal: 3),
+                                              color: Colors.white,
+                                              child: RichText(
+                                                text: TextSpan(
+                                                  text: 'Village',
+                                                  style: TextStyle(color: Colors.black),
+                                                  /*defining default style is optional */
+                                                  children: <TextSpan>[
+                                                    TextSpan(
+                                                        text: ' *',
+                                                        style: TextStyle(fontWeight: FontWeight.bold,color:  Colors.red)),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+
+                                        ],
                                       ),
                                     ),
                                     Container(
