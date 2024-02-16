@@ -5,9 +5,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../locator.dart';
+import '../../network/data/DashBoardMenu.dart';
 import '../../network/viewmodel/PmajayVM.dart';
 import '../../utills/ButtomMenu.dart';
 import '../../utills/FontSize.dart';
+import '../../utills/SharedPreferencesHelper.dart';
 import '../widget/CustomWidget.dart';
 import '../../utills/AppString.dart';
 import '../../utills/CustomColor.dart';
@@ -15,6 +17,7 @@ import '../widget/ExpandableTextWidget.dart';
 import '../widget/LoaderWidget.dart';
 import '../widget/ResizableTextView.dart';
 import '../widget/tab_item.dart';
+import 'ComponentActivity.dart';
 import 'NodelOfficerDetails.dart';
 import 'fragment/villageformat/VillageFormat_III_HouseholdLevelDataAdd.dart';
 import 'fragment/villageformat/VillageFormat_II_InfrastructureAdd.dart';
@@ -79,7 +82,8 @@ class DashBoard extends StatefulWidget {
   State<DashBoard> createState() => _DashBoardState();
 }
 
-class _DashBoardState extends State<DashBoard> {
+class _DashBoardState extends State<DashBoard>
+{
   void _portraitModeOnly() {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
@@ -201,17 +205,7 @@ Incomplete Households Survey = 15
               Navigator.of(context).push(_createRoute(NodelOfficerDetails()));
             },
           ),
-          TabItem(
-            text: tabs[4],
-            icon: Icons.manage_accounts,
-            isSelected: selectedPosition == 4,
-            onTap: () {
 
-              setState(() {
-                selectedPosition = 4;
-              });
-            },
-          ),
           TabItem(
             text: tabs[5],
             icon: Icons.menu,
@@ -328,37 +322,80 @@ Incomplete Households Survey = 15
     );
 
   }
-
+  final menu_toolbar = [
+    DashBoardMenu( id: 1,title: 'Update Profile',  icon: Icons.manage_accounts, iconColor: CustomColor.black_dark
+        ),
+    DashBoardMenu( id: 2,title: 'Change Password',icon: Icons.edit_square, iconColor: CustomColor.black_dark
+    ),
+    DashBoardMenu( id: 3,title: 'Sign Out',  icon: Icons.login, iconColor: CustomColor.red_dark
+    ),
+  ];
   Widget MainScanFold(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: CustomColor.theme_color1,
         iconTheme: IconThemeData(color: Colors.white),
         title: Padding(
-          padding: const EdgeInsets.only(left: 8.0),
+          padding: const EdgeInsets.only(left: 0.0),
           child: ToolbarTextView(AppString.app_name, FontSize.sp_18,
               CustomColor.white, FontWeight.bold),
         ),
         elevation: 0,
         actions: <Widget>[
-          IconButton(
-            icon: Image.asset('assets/images/ic_logout.png',
-                // Replace with your asset image path
-                width: 24, // Set the width of the image
-                height: 24,
-                color: CustomColor.red_dark // Set the height of the image
-                ),
-            // Notification icon
-            onPressed: () {},
-          ),
-          Text(AppString.sign_out,
-              style: TextStyle(
-                color: Colors.white,
-                fontFamily: 'Calibri',
-              )),
-          SizedBox(
-            width: 10.0,
+
+          PopupMenuButton<DashBoardMenu>(
+            onSelected: (value) {
+              if(value.title=='Sign Out')
+              {
+                logoutApp();
+              }
+
+
+            },
+
+            itemBuilder: (BuildContext context) {
+
+              return menu_toolbar.map((DashBoardMenu item)
+              {
+                return PopupMenuItem<DashBoardMenu>(
+                  value: item,
+                  child:  Column(
+                    children: [
+                      Row(children: [
+                        Icon(item.icon,color:item.iconColor ,),
+                        SizedBox(width: 5,),
+                        Text(item.title,
+                            style:TextStyle(
+                                fontSize: FontSize.sp_12,
+                                color:item.iconColor ))
+                      ],)
+
+                    ],
+                  ),
+                );
+              }).toList();
+            },
+            child:   Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Column(children: [
+                  Text(Name,
+                      style:TextStyle(
+                          fontSize: FontSize.sp_12,
+                          color:CustomColor.white )),
+                  Text('${District} (${State})',style:TextStyle(
+                      fontSize: FontSize.sp_9,
+                      color:CustomColor.white )),
+
+
+                ],),
+
+                Icon(Icons.arrow_drop_down),
+
+              ],
+            ),
           )
+
         ],
       ),
       // drawer: DrawerDesign(),
@@ -481,7 +518,82 @@ Incomplete Households Survey = 15
       },
     );
   }
+  @override
+  void initState() {
+    getsharePref();
+    super.initState();
+  }
+  late  String Name="";
+  late  String State="";
+  late  String StateCode="";
+  late  String District="";
+  late  String DistrictCode="";
+  Future<void> getsharePref() async
+  {
+    String? _Name =    await SharedPreferencesHelper.getPreferance(AppString.pref_Name);
+    String? _State =    await SharedPreferencesHelper.getPreferance(AppString.pref_State);
+    String? _StateCode =    await SharedPreferencesHelper.getPreferance(AppString.pref_StateCode);
+    String? _District =    await SharedPreferencesHelper.getPreferance(AppString.pref_District);
+    String? _DistrictCode =    await SharedPreferencesHelper.getPreferance(AppString.pref_DistrictCode);
 
+    setState(() {
+      Name = _Name??"";
+      State = _State??"";
+      StateCode = _StateCode??"";
+      District = _District??"";
+      DistrictCode = _DistrictCode??"";
+
+    });
+  }
+
+  Future<void> logoutApp() async
+  {
+    return showDialog<void>(
+      context: context, barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(title: const Text(''),
+          content: const SingleChildScrollView(
+            child: ListBody(children: <Widget>[Text('Are you sure to logout?'),
+            ],),),
+          actions: <Widget>[
+            Row(children: <Widget>[
+              Container(alignment: Alignment.topCenter,
+                  margin: const EdgeInsets.only(left: 10, right: 10),
+                  child: SizedBox(height: 30,
+
+                      child: ElevatedButton(style: ButtonStyle(
+                        shape: MaterialStateProperty.all<
+                            RoundedRectangleBorder>(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),),),),
+                          child: const Text('No'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          }))),
+              SizedBox(height: 30, width: 30),
+              Container(alignment: Alignment.topCenter,
+                  margin: const EdgeInsets.only(left: 10, right: 10),
+                  child: SizedBox(height: 30,
+
+                      child: ElevatedButton(style: ButtonStyle(
+                        shape: MaterialStateProperty.all<
+                            RoundedRectangleBorder>(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),),),),
+                          child: const Text('Yes'),
+                          onPressed: () {
+                            SharedPreferencesHelper.ClearPreferance().then((value) =>
+                            {
+                              Navigator.of(context).pop(),
+
+                              Navigator.pushReplacement(
+                                context, MaterialPageRoute(builder: (context) =>
+                                  ComponentActivity()),)
+                            });
+
+                          }))),
+            ])
+          ],);
+      },);
+  }
   @override
   Widget build(BuildContext context) {
     _portraitModeOnly();

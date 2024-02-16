@@ -214,11 +214,12 @@ class _LoginActivityState extends State<LoginActivity>
           var message = viewModelListner.loginMain.data.response.message;
           List<DataResult>? dataResult=[];
           dataResult=viewModelListner.loginMain.data.response.dataResult;
+          var Name = viewModelListner.loginMain.data.response.dataResult[0].Name;
           var State = viewModelListner.loginMain.data.response.dataResult[0].state;
           var StateCode = viewModelListner.loginMain.data.response.dataResult[0].stateCode;
           var District = viewModelListner.loginMain.data.response.dataResult[0].district;
           var DistrictCode = viewModelListner.loginMain.data.response.dataResult[0].districtCode;
-
+          SharedPreferencesHelper.savePref(AppString.pref_Name,Name);
           SharedPreferencesHelper.savePref(AppString.pref_State,State);
           SharedPreferencesHelper.savePref(AppString.pref_StateCode,StateCode);
           SharedPreferencesHelper.savePref(AppString.pref_District,District);
@@ -737,43 +738,43 @@ class _LoginActivityState extends State<LoginActivity>
 
                               ///api call
 
-                              // if (user_name == null || user_name.isEmpty) {
-                              //   Utils.flushBarErrorMessage(
-                              //       AppString.enter_userid,
-                              //       context,
-                              //       flushBarKey);
-                              //
-                              //   return;
-                              // }
-                              // if (password == null || password.isEmpty) {
-                              //   Utils.flushBarErrorMessage(
-                              //       AppString.enter_password,
-                              //       context,
-                              //       flushBarKey);
-                              //
-                              //   return;
-                              // }
-                              //
-                              // if (_usercaptchaCont.text == null ||
-                              //     _usercaptchaCont.text.isEmpty) {
-                              //   Utils.flushBarErrorMessage(
-                              //       AppString.enter_captcha,
-                              //       context,
-                              //       flushBarKey);
-                              //
-                              //   return;
-                              // }
-                              // isVerified = _usercaptchaCont.text == randomString;
-                              // setState(() {});
-                              // if (!isVerified)
-                              // {
-                              //   Utils.flushBarErrorMessage(
-                              //       AppString.enter_wrong_captcha,
-                              //       context,
-                              //       flushBarKey);
-                              //
-                              //   return;
-                              // }
+                              if (user_name == null || user_name.isEmpty) {
+                                Utils.flushBarErrorMessage(
+                                    AppString.enter_userid,
+                                    context,
+                                    flushBarKey);
+
+                                return;
+                              }
+                              if (password == null || password.isEmpty) {
+                                Utils.flushBarErrorMessage(
+                                    AppString.enter_password,
+                                    context,
+                                    flushBarKey);
+
+                                return;
+                              }
+
+                              if (_usercaptchaCont.text == null ||
+                                  _usercaptchaCont.text.isEmpty) {
+                                Utils.flushBarErrorMessage(
+                                    AppString.enter_captcha,
+                                    context,
+                                    flushBarKey);
+
+                                return;
+                              }
+                              isVerified = _usercaptchaCont.text == randomString;
+                              setState(() {});
+                              if (!isVerified)
+                              {
+                                Utils.flushBarErrorMessage(
+                                    AppString.enter_wrong_captcha,
+                                    context,
+                                    flushBarKey);
+
+                                return;
+                              }
 
                               TextInput.finishAutofillContext();
 

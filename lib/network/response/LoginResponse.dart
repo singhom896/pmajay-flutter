@@ -52,14 +52,17 @@ class Response {
 }
 
 class DataResult {
+  String? Name;
   String? state;
   String? stateCode;
   String? district;
   String? districtCode;
 
-  DataResult({this.state, this.stateCode, this.district, this.districtCode});
+
+  DataResult({this.Name,this.state, this.stateCode, this.district, this.districtCode});
 
   DataResult.fromJson(Map<String, dynamic> json) {
+    Name = json['Name'];
     state = json['State'];
     stateCode = json['StateCode'];
     district = json['District'];
@@ -68,6 +71,7 @@ class DataResult {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['Name'] = this.Name;
     data['State'] = this.state;
     data['StateCode'] = this.stateCode;
     data['District'] = this.district;

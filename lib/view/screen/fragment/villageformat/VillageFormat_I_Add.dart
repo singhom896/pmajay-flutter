@@ -65,6 +65,8 @@ class _village_format_i_addState extends State<VillageFormat_I_Add> {
   void initState() {
     super.initState();
     initview();
+
+
     getsharePref();
     _myActivity = '';
     _myActivityResult = '';
@@ -73,10 +75,15 @@ class _village_format_i_addState extends State<VillageFormat_I_Add> {
     _checkPermissions();
     _startLocationUpdates();
     setDataList();
+    select_designation = '';
+    _myActivityResult = '';
+    clickevent = false;
   }
-
+  List<AddCommittee?> committeeListData=[];
  Future<void>initview()
   async {
+    // data_list =Provider.of<PmajayVM>(context, listen: false) .getCommitteeList;
+
     blocklist.add(BlockResult(BlockCode:'0',BlockName:'--Select Block---'));
     selectblockvalue=blocklist[0];
 
@@ -290,7 +297,7 @@ class _village_format_i_addState extends State<VillageFormat_I_Add> {
   late VillageResult selectvillagealue;
   List<Map<String, dynamic>> blocklistAsMap=[];
 
-  List<AddCommittee?> committeeListData = [];
+
 
   @override
   void dispose() {
@@ -381,13 +388,22 @@ class _village_format_i_addState extends State<VillageFormat_I_Add> {
     Navigator.pop(context, true);
     return true; // Example: Always allow back navigation
   }
+  AddCommittee addCommittee = AddCommittee();
+  late String select_designation;
+  TextEditingController name = new TextEditingController();
+  TextEditingController designation = new TextEditingController();
+
+  TextEditingController mobileno = new TextEditingController();
+
+  TextEditingController emailid = new TextEditingController();
+  TextEditingController address = new TextEditingController();
+  TextEditingController remark = new TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
     double latitude = _locationData?.latitude ?? 0.0;
     double longitude = _locationData?.longitude ?? 0.0;
-
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -1228,12 +1244,13 @@ class _village_format_i_addState extends State<VillageFormat_I_Add> {
                                     borderRadius: BorderRadius.circular(25.0),
                                     // Same as container to make the ripple effect circular
                                     onTap: () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AddDataDialog();
-                                        },
-                                      );
+                                      addCommitteeDialog();
+                                      // showDialog(
+                                      //   context: context,
+                                      //   builder: (BuildContext context) {
+                                      //     return addCommitteeDialog();
+                                      //   },
+                                      // );
                                     },
                                     child: Icon(
                                       Icons.add,
@@ -1242,8 +1259,18 @@ class _village_format_i_addState extends State<VillageFormat_I_Add> {
                                   ),
                                 ),
                               ),
-                              committeeListData.length==0?Container(
+                              committeeListData.length==0?
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: CustomColor.patter_bg,
+                                  borderRadius: const BorderRadius.only(
+                                      topRight: Radius.circular(5.0),
+                                      topLeft: Radius.circular(5.0),
+                                      bottomLeft: Radius.circular(5.0),
+                                      bottomRight: Radius.circular(5.0)),
+                                ),
                                 padding: EdgeInsets.all(5),
+                                margin: EdgeInsets.all(5),
                                 child: Column(
                                   children: [
                                     Row(
@@ -1479,246 +1506,284 @@ class _village_format_i_addState extends State<VillageFormat_I_Add> {
                                 shrinkWrap: true,
                                 itemCount: committeeListData.length,
                                 itemBuilder: (context, index) {
-                                  return Container(
-                                    padding: EdgeInsets.all(5),
-                                    child: Column(
-                                      children: [
-                                        Row(
+                                return  Container(
+                                  decoration: BoxDecoration(
+                                    color: CustomColor.patter_bg,
+                                    borderRadius: const BorderRadius.only(
+                                        topRight: Radius.circular(5.0),
+                                        topLeft: Radius.circular(5.0),
+                                        bottomLeft: Radius.circular(5.0),
+                                        bottomRight: Radius.circular(5.0)),
+                                  ),
+                                  padding: EdgeInsets.all(10),
+                                  margin: EdgeInsets.all(5),
+                                    child: Stack(
+                                      children: <Widget>[
+                                        Column(
                                           children: [
-                                            Expanded(
-                                              flex: 1,
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    textAlign: TextAlign.right,
-                                                    'Name',
-                                                    style: TextStyle(
-                                                        fontFamily: 'Calibri',
-                                                        color: CustomColor
-                                                            .black_light,
-                                                        fontSize: FontSize.sp_15,
-                                                        fontWeight:
-                                                        FontWeight.bold),
+                                            Row(
+                                              children: [
+                                                Expanded(
+                                                  flex: 1,
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                        textAlign: TextAlign.right,
+                                                        'Name',
+                                                        style: TextStyle(
+                                                            fontFamily: 'Calibri',
+                                                            color: CustomColor
+                                                                .black_light,
+                                                            fontSize: FontSize.sp_15,
+                                                            fontWeight:
+                                                            FontWeight.bold),
+                                                      ),
+                                                      SizedBox(height: 5,),
+                                                      Text(
+                                                        textAlign: TextAlign.right,
+                                                        committeeListData[index]?.Name??"",
+                                                        maxLines: 3,
+                                                        style: TextStyle(
+                                                            overflow:
+                                                            TextOverflow.ellipsis,
+                                                            fontFamily: 'Calibri',
+                                                            color: CustomColor
+                                                                .black_dark,
+                                                            fontSize: FontSize.sp_15,
+                                                            fontWeight:
+                                                            FontWeight.bold),
+                                                      ),
+
+                                                    ],
                                                   ),
-                                                  SizedBox(height: 5,),
+                                                ),
+                                                Expanded(
+                                                    flex: 1,
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Text(
+                                                          textAlign: TextAlign.right,
+                                                          'Designation',
+                                                          style: TextStyle(
+                                                              fontFamily: 'Calibri',
+                                                              color: CustomColor
+                                                                  .black_light,
+                                                              fontSize: FontSize.sp_15,
+                                                              fontWeight:
+                                                              FontWeight.bold),
+                                                        ),
+                                                        SizedBox(height: 5,),
+                                                        Text(
+                                                          textAlign: TextAlign.right,
+                                                          committeeListData[index]!.Designation??"",
+                                                          maxLines: 3,
+                                                          style: TextStyle(
+                                                              overflow:
+                                                              TextOverflow.ellipsis,
+                                                              fontFamily: 'Calibri',
+                                                              color: CustomColor
+                                                                  .black_dark,
+                                                              fontSize: FontSize.sp_15,
+                                                              fontWeight:
+                                                              FontWeight.bold),
+                                                        ),
 
-                                                  Text(
-                                                    textAlign: TextAlign.right,
-                                                    committeeListData[index]!
-                                                        .Name,
-                                                    maxLines: 3,
-                                                    style: TextStyle(
-                                                        overflow:
-                                                        TextOverflow.ellipsis,
-                                                        fontFamily: 'Calibri',
-                                                        color: CustomColor
-                                                            .black_dark,
-                                                        fontSize: FontSize.sp_15,
-                                                        fontWeight:
-                                                        FontWeight.bold),
-                                                  ),
-
-                                                ],
-                                              ),
-                                            ),
-                                            Expanded(
-                                              flex: 1,
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    textAlign: TextAlign.right,
-                                                    'Designation',
-                                                    style: TextStyle(
-                                                        fontFamily: 'Calibri',
-                                                        color: CustomColor
-                                                            .black_light,
-                                                        fontSize: FontSize.sp_15,
-                                                        fontWeight:
-                                                        FontWeight.bold),
-                                                  ),
-                                                  SizedBox(height: 5,),
-                                                  Text(
-                                                    textAlign: TextAlign.right,
-                                                    committeeListData[index]!
-                                                        .Designation,
-                                                    maxLines: 3,
-                                                    style: TextStyle(
-                                                        overflow:
-                                                        TextOverflow.ellipsis,
-                                                        fontFamily: 'Calibri',
-                                                        color: CustomColor
-                                                            .black_dark,
-                                                        fontSize: FontSize.sp_15,
-                                                        fontWeight:
-                                                        FontWeight.bold),
-                                                  ),
-
-                                                ],
-                                              )
-                                            ),
-
-
-                                          ],
-                                        ),
-                                        dividerLine(),
-                                        Row(
-                                          children: [
-                                            Expanded(
-                                              flex: 1,
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    textAlign: TextAlign.right,
-                                                    'MobileNo',
-                                                    style: TextStyle(
-                                                        fontFamily: 'Calibri',
-                                                        color: CustomColor
-                                                            .black_light,
-                                                        fontSize: FontSize.sp_15,
-                                                        fontWeight:
-                                                        FontWeight.bold),
-                                                  ),
-
-                                                  Text(
-                                                    textAlign: TextAlign.right,
-                                                    committeeListData[index]!
-                                                        .MobileNo,
-                                                    maxLines: 3,
-                                                    style: TextStyle(
-                                                        overflow:
-                                                        TextOverflow.ellipsis,
-                                                        fontFamily: 'Calibri',
-                                                        color: CustomColor
-                                                            .black_dark,
-                                                        fontSize: FontSize.sp_15,
-                                                        fontWeight:
-                                                        FontWeight.bold),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Expanded(
-                                                flex: 1,
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      textAlign: TextAlign.right,
-                                                      'Email',
-                                                      style: TextStyle(
-                                                          fontFamily: 'Calibri',
-                                                          color: CustomColor
-                                                              .black_light,
-                                                          fontSize: FontSize.sp_15,
-                                                          fontWeight:
-                                                          FontWeight.bold),
-                                                    ),
-
-                                                    Text(
-                                                      textAlign: TextAlign.right,
-                                                      committeeListData[index]!
-                                                          .Email,
-                                                      maxLines: 3,
-                                                      style: TextStyle(
-                                                          overflow:
-                                                          TextOverflow.ellipsis,
-                                                          fontFamily: 'Calibri',
-                                                          color: CustomColor
-                                                              .black_dark,
-                                                          fontSize: FontSize.sp_15,
-                                                          fontWeight:
-                                                          FontWeight.bold),
+                                                      ],
                                                     )
-                                                  ],
-                                                )
+                                                ),
+
+
+                                              ],
                                             ),
+                                            dividerLine(),
+                                            Row(
+                                              children: [
+                                                Expanded(
+                                                  flex: 1,
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                        textAlign: TextAlign.right,
+                                                        'MobileNo',
+                                                        style: TextStyle(
+                                                            fontFamily: 'Calibri',
+                                                            color: CustomColor
+                                                                .black_light,
+                                                            fontSize: FontSize.sp_15,
+                                                            fontWeight:
+                                                            FontWeight.bold),
+                                                      ),
 
-
-                                          ],
-                                        ),
-                                        dividerLine(),
-                                        Row(
-                                          children: [
-                                            Expanded(
-                                              flex: 1,
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    textAlign: TextAlign.right,
-                                                    'Address',
-                                                    style: TextStyle(
-                                                        fontFamily: 'Calibri',
-                                                        color: CustomColor
-                                                            .black_light,
-                                                        fontSize: FontSize.sp_15,
-                                                        fontWeight:
-                                                        FontWeight.bold),
+                                                      Text(
+                                                        textAlign: TextAlign.right,
+                                                        committeeListData[index]!.MobileNo??"",
+                                                        maxLines: 3,
+                                                        style: TextStyle(
+                                                            overflow:
+                                                            TextOverflow.ellipsis,
+                                                            fontFamily: 'Calibri',
+                                                            color: CustomColor
+                                                                .black_dark,
+                                                            fontSize: FontSize.sp_15,
+                                                            fontWeight:
+                                                            FontWeight.bold),
+                                                      ),
+                                                    ],
                                                   ),
+                                                ),
+                                                Expanded(
+                                                    flex: 1,
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Text(
+                                                          textAlign: TextAlign.right,
+                                                          'Email',
+                                                          style: TextStyle(
+                                                              fontFamily: 'Calibri',
+                                                              color: CustomColor
+                                                                  .black_light,
+                                                              fontSize: FontSize.sp_15,
+                                                              fontWeight:
+                                                              FontWeight.bold),
+                                                        ),
 
-                                                  Text(
-                                                    textAlign: TextAlign.right,
-                                                    committeeListData[index]!
-                                                        .Address,
-                                                    maxLines: 3,
-                                                    style: TextStyle(
-                                                        overflow:
-                                                        TextOverflow.ellipsis,
-                                                        fontFamily: 'Calibri',
-                                                        color: CustomColor
-                                                            .black_dark,
-                                                        fontSize: FontSize.sp_15,
-                                                        fontWeight:
-                                                        FontWeight.bold),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Expanded(
-                                                flex: 1,
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      textAlign: TextAlign.right,
-                                                      'Remark',
-                                                      style: TextStyle(
-                                                          fontFamily: 'Calibri',
-                                                          color: CustomColor
-                                                              .black_light,
-                                                          fontSize: FontSize.sp_15,
-                                                          fontWeight:
-                                                          FontWeight.bold),
-                                                    ),
-
-                                                    Text(
-                                                      textAlign: TextAlign.right,
-                                                      committeeListData[index]!
-                                                          .Remark,
-                                                      maxLines: 3,
-                                                      style: TextStyle(
-                                                          overflow:
-                                                          TextOverflow.ellipsis,
-                                                          fontFamily: 'Calibri',
-                                                          color: CustomColor
-                                                              .black_dark,
-                                                          fontSize: FontSize.sp_15,
-                                                          fontWeight:
-                                                          FontWeight.bold),
+                                                        Text(
+                                                          textAlign: TextAlign.right,
+                                                          committeeListData[index]!.Email??"",
+                                                          maxLines: 3,
+                                                          style: TextStyle(
+                                                              overflow:
+                                                              TextOverflow.ellipsis,
+                                                              fontFamily: 'Calibri',
+                                                              color: CustomColor
+                                                                  .black_dark,
+                                                              fontSize: FontSize.sp_15,
+                                                              fontWeight:
+                                                              FontWeight.bold),
+                                                        )
+                                                      ],
                                                     )
-                                                  ],
-                                                )
+                                                ),
+
+
+                                              ],
                                             ),
+                                            dividerLine(),
+                                            Row(
+                                              children: [
+                                                Expanded(
+                                                  flex: 1,
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                        textAlign: TextAlign.right,
+                                                        'Address',
+                                                        style: TextStyle(
+                                                            fontFamily: 'Calibri',
+                                                            color: CustomColor
+                                                                .black_light,
+                                                            fontSize: FontSize.sp_15,
+                                                            fontWeight:
+                                                            FontWeight.bold),
+                                                      ),
+
+                                                      Text(
+                                                        textAlign: TextAlign.right,
+                                                        committeeListData[index]!.Address??"",
+                                                        maxLines: 3,
+                                                        style: TextStyle(
+                                                            overflow:
+                                                            TextOverflow.ellipsis,
+                                                            fontFamily: 'Calibri',
+                                                            color: CustomColor
+                                                                .black_dark,
+                                                            fontSize: FontSize.sp_15,
+                                                            fontWeight:
+                                                            FontWeight.bold),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                    flex: 1,
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Text(
+                                                          textAlign: TextAlign.right,
+                                                          'Remark',
+                                                          style: TextStyle(
+                                                              fontFamily: 'Calibri',
+                                                              color: CustomColor
+                                                                  .black_light,
+                                                              fontSize: FontSize.sp_15,
+                                                              fontWeight:
+                                                              FontWeight.bold),
+                                                        ),
+
+                                                        Text(
+                                                          textAlign: TextAlign.right,
+                                                          committeeListData[index]!.Remark??"",
+                                                          maxLines: 3,
+                                                          style: TextStyle(
+                                                              overflow:
+                                                              TextOverflow.ellipsis,
+                                                              fontFamily: 'Calibri',
+                                                              color: CustomColor
+                                                                  .black_dark,
+                                                              fontSize: FontSize.sp_15,
+                                                              fontWeight:
+                                                              FontWeight.bold),
+                                                        )
+                                                      ],
+                                                    )
+                                                ),
 
 
+                                              ],
+                                            ),
                                           ],
                                         ),
+                                        Positioned(
+                                          right: 5,
+                                          top: 3,
+                                          child: Container(
+                                            margin: EdgeInsets.only(top: 5, right: 10),
+                                            width: 25.0,
+                                            height: 25.0,
+                                            decoration: BoxDecoration(
+                                              color: Colors.red,
+                                              // Change color as needed
+                                              borderRadius: BorderRadius.circular(
+                                                  25.0), // Half of the width and height to make it circular
+                                            ),
+                                            child: InkWell(
+                                              borderRadius: BorderRadius.circular(25.0),
+                                              // Same as container to make the ripple effect circular
+                                              onTap: () {
+
+                                                committeeListData.removeAt(index);
+                                                setState(() {
+
+                                                });
+                                              },
+                                              child: Center(child: Text('X',style: TextStyle(fontSize: FontSize.sp_18,color:  Colors.white,fontWeight: FontWeight.bold),)),
+                                            ),
+                                          ),
+                                        ),
+
+
+
                                       ],
                                     ),
                                   );
+
+
                                 },
                               )
                             ],
@@ -1757,264 +1822,256 @@ class _village_format_i_addState extends State<VillageFormat_I_Add> {
       ),
     );
   }
-}
+  Future<void> addCommitteeDialog() async
+  {
+    showDialog(
+      context: context,
+      builder: (context) {
 
-class AddDataDialog extends StatefulWidget {
-  @override
-  State<AddDataDialog> createState() => _AddDataDialogState();
-}
-
-class _AddDataDialogState extends State<AddDataDialog> {
-  TextEditingController name = new TextEditingController();
-  TextEditingController designation = new TextEditingController();
-
-  TextEditingController mobileno = new TextEditingController();
-
-  TextEditingController emailid = new TextEditingController();
-  TextEditingController address = new TextEditingController();
-  TextEditingController remark = new TextEditingController();
-
-  late bool clickevent;
-  late String select_designation;
-  late String _myActivityResult;
-
-  @override
-  void initState() {
-    super.initState();
-    select_designation = '';
-    _myActivityResult = '';
-    clickevent = false;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text('Add Convergence Committee'),
-      content: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              margin: EdgeInsets.only(top: 5),
-              decoration: BoxDecoration(
-                color: Colors.white, // Background color
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.green.withOpacity(0.5),
-                    // Elevation color
-                    spreadRadius: 1,
-                    blurRadius: 1,
-                    offset: Offset(0, 1), // changes position of shadow
-                  ),
-                ],
-              ),
-              child: TextFormField(
-                controller: name,
-                decoration: const InputDecoration(
-                  hintText: 'Enter your Name',
-                  labelText: 'Name',
-                  contentPadding: EdgeInsets.symmetric(
-                      vertical: 5, horizontal: 5), // Adjust text padding
-                ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-              ),
-            ),
-            Container(
-              child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () {
-                  setState(() {
-                    clickevent = true;
-                  });
-                },
-                child: DropDownFormField(
-                  titleText: 'Designation',
-                  hintText: ' --Select---',
-                  value: select_designation,
-                  onSaved: (value) {
-                    setState(() {
-                      select_designation = value;
-                    });
-                  },
-                  onChanged: (value) {
-                    setState(() {
-                      select_designation = value;
-                    });
-                  },
-                  dataSource: [
-                    {
-                      "display": "--Select Designation---",
-                      "value": "--Select Designation---",
-                    },
-                    {
-                      "display": "AAO",
-                      "value": "AAO",
-                    },
-                    {
-                      "display": "A.N.M",
-                      "value": "A.N.M",
-                    },
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: Text('Add Convergence Committee'),
+              content: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(top: 5),
+                      decoration: BoxDecoration(
+                        color: Colors.white, // Background color
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.green.withOpacity(0.5),
+                            // Elevation color
+                            spreadRadius: 1,
+                            blurRadius: 1,
+                            offset: Offset(0, 1), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: TextFormField(
+                        controller: name,
+                        decoration: const InputDecoration(
+                          hintText: 'Enter your Name',
+                          labelText: 'Name',
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 5), // Adjust text padding
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    Container(
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          setState(() {
+                            clickevent = true;
+                          });
+                        },
+                        child: DropDownFormField(
+                          titleText: 'Designation',
+                          hintText: ' --Select---',
+                          value: select_designation,
+                          onSaved: (value) {
+                            setState(() {
+                              select_designation = value;
+                            });
+                          },
+                          onChanged: (value) {
+                            setState(() {
+                              select_designation = value;
+                            });
+                          },
+                          dataSource: [
+                            {
+                              "display": "--Select Designation---",
+                              "value": "--Select Designation---",
+                            },
+                            {
+                              "display": "AAO",
+                              "value": "AAO",
+                            },
+                            {
+                              "display": "A.N.M",
+                              "value": "A.N.M",
+                            },
+                          ],
+                          textField: 'display',
+                          valueField: 'value',
+                          validator: (value) {},
+                          context: context,
+                          onTabClick: clickevent,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 5),
+                      decoration: BoxDecoration(
+                        color: Colors.white, // Background color
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.green.withOpacity(0.5),
+                            // Elevation color
+                            spreadRadius: 1,
+                            blurRadius: 1,
+                            offset: Offset(0, 1), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: TextFormField(
+                        controller: mobileno,
+                        decoration: const InputDecoration(
+                          hintText: 'Enter your Mobile No.',
+                          labelText: 'Mobile No.',
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 5), // Adjust text padding
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 5),
+                      decoration: BoxDecoration(
+                        color: Colors.white, // Background color
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.green.withOpacity(0.5),
+                            // Elevation color
+                            spreadRadius: 1,
+                            blurRadius: 1,
+                            offset: Offset(0, 1), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: TextFormField(
+                        controller: emailid,
+                        decoration: const InputDecoration(
+                          hintText: 'Enter your Email.',
+                          labelText: 'Email',
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 5), // Adjust text padding
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 5),
+                      decoration: BoxDecoration(
+                        color: Colors.white, // Background color
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.green.withOpacity(0.5),
+                            // Elevation color
+                            spreadRadius: 1,
+                            blurRadius: 1,
+                            offset: Offset(0, 1), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: TextFormField(
+                        controller: address,
+                        decoration: const InputDecoration(
+                          hintText: 'Enter your Address.',
+                          labelText: 'Address',
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 5), // Adjust text padding
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 5),
+                      decoration: BoxDecoration(
+                        color: Colors.white, // Background color
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.green.withOpacity(0.5),
+                            // Elevation color
+                            spreadRadius: 1,
+                            blurRadius: 1,
+                            offset: Offset(0, 1), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: TextFormField(
+                        controller: remark,
+                        decoration: const InputDecoration(
+                          hintText: 'Enter your Remark.',
+                          labelText: 'Remark',
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 5), // Adjust text padding
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
                   ],
-                  textField: 'display',
-                  valueField: 'value',
-                  validator: (value) {},
-                  context: context,
-                  onTabClick: clickevent,
                 ),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 5),
-              decoration: BoxDecoration(
-                color: Colors.white, // Background color
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.green.withOpacity(0.5),
-                    // Elevation color
-                    spreadRadius: 1,
-                    blurRadius: 1,
-                    offset: Offset(0, 1), // changes position of shadow
-                  ),
-                ],
-              ),
-              child: TextFormField(
-                controller: mobileno,
-                decoration: const InputDecoration(
-                  hintText: 'Enter your Mobile No.',
-                  labelText: 'Mobile No.',
-                  contentPadding: EdgeInsets.symmetric(
-                      vertical: 5, horizontal: 5), // Adjust text padding
+              actions: <Widget>[
+                ElevatedButton(
+                  onPressed: () {
+                    // Close the dialog
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Cancel'),
                 ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 5),
-              decoration: BoxDecoration(
-                color: Colors.white, // Background color
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.green.withOpacity(0.5),
-                    // Elevation color
-                    spreadRadius: 1,
-                    blurRadius: 1,
-                    offset: Offset(0, 1), // changes position of shadow
-                  ),
-                ],
-              ),
-              child: TextFormField(
-                controller: emailid,
-                decoration: const InputDecoration(
-                  hintText: 'Enter your Email.',
-                  labelText: 'Email',
-                  contentPadding: EdgeInsets.symmetric(
-                      vertical: 5, horizontal: 5), // Adjust text padding
+                ElevatedButton(
+                  onPressed: () {
+                    // addCommittee.Name=name.text;
+                    // addCommittee.Designation=select_designation;
+                    // addCommittee.MobileNo=mobileno.text;
+                    // addCommittee.Email=emailid.text;
+                    // addCommittee.Address=address.text;
+                    // addCommittee.Remark=remark.text;
+                    var saveData = AddCommittee(
+                        Name: name.text,
+                        Designation: select_designation,
+                        MobileNo: mobileno.text,
+                        Email: emailid.text,
+                        Address: address.text,
+                        Remark: remark.text);
+                    committeeListData.add(saveData);
+
+                    setState(() {
+
+                    });
+                    //  Provider.of<PmajayVM>(context, listen: false).setAddCommitteeList = data_list;
+                    Navigator.of(context).pop(); // Close the dialog
+                  },
+                  child: Text('Add'),
                 ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 5),
-              decoration: BoxDecoration(
-                color: Colors.white, // Background color
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.green.withOpacity(0.5),
-                    // Elevation color
-                    spreadRadius: 1,
-                    blurRadius: 1,
-                    offset: Offset(0, 1), // changes position of shadow
-                  ),
-                ],
-              ),
-              child: TextFormField(
-                controller: address,
-                decoration: const InputDecoration(
-                  hintText: 'Enter your Address.',
-                  labelText: 'Address',
-                  contentPadding: EdgeInsets.symmetric(
-                      vertical: 5, horizontal: 5), // Adjust text padding
-                ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 5),
-              decoration: BoxDecoration(
-                color: Colors.white, // Background color
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.green.withOpacity(0.5),
-                    // Elevation color
-                    spreadRadius: 1,
-                    blurRadius: 1,
-                    offset: Offset(0, 1), // changes position of shadow
-                  ),
-                ],
-              ),
-              child: TextFormField(
-                controller: remark,
-                decoration: const InputDecoration(
-                  hintText: 'Enter your Remark.',
-                  labelText: 'Remark',
-                  contentPadding: EdgeInsets.symmetric(
-                      vertical: 5, horizontal: 5), // Adjust text padding
-                ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-      actions: <Widget>[
-        ElevatedButton(
-          onPressed: () {
-            // Close the dialog
-            Navigator.of(context).pop();
+              ],
+            );
           },
-          child: Text('Cancel'),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            var saveData = AddCommittee(
-                Name: name.text,
-                Designation: select_designation,
-                MobileNo: mobileno.text,
-                Email: emailid.text,
-                Address: address.text,
-                Remark: remark.text);
-            List<AddCommittee?> data_list =Provider.of<PmajayVM>(context, listen: false) .getCommitteeList;
-            data_list.add(saveData);
-            Provider.of<PmajayVM>(context, listen: false).setAddCommitteeList = data_list;
-            Navigator.of(context).pop(); // Close the dialog
-          },
-          child: Text('Add'),
-        ),
-      ],
+        );
+      },
     );
+
   }
 }
+

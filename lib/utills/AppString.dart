@@ -97,6 +97,7 @@ class AppString
 
   static String please_check_login='Please check your login credentials';
 
+  static String pref_Name='Name';
   static String pref_State='State';
   static String pref_StateCode='StateCode';
   static String pref_District='District';

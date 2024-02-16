@@ -60,17 +60,14 @@ class SharedPreferencesHelper {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString(key);
   }
-//   static Future<void> savePreferance(String key,String _value) async {
-//     SharedPreferences prefs = await SharedPreferences.getInstance();
-//     await prefs.setString(key, _value);
-//   }
-//   static Future<void> ClearPreferance() async {
-//     SharedPreferences prefs = await SharedPreferences.getInstance();
-//     await prefs.remove(_authkey);
-//     await prefs.remove(_userType);
-//     await prefs.remove(_name);
-// //parent preferance
-//
-//
-//   }
+  static Future<void> ClearPreferance() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    await prefs.remove(AppString.pref_Name);
+    await prefs.remove(AppString.pref_State);
+    await prefs.remove(AppString.pref_StateCode);
+    await prefs.remove(AppString.pref_District);
+    await prefs.remove(AppString.pref_DistrictCode);
+    await prefs.remove('userlogin');
+  }
 }
