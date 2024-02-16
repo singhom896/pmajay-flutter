@@ -97,8 +97,7 @@ class NetworkApiService extends BaseApiService {
           "/getBlock.php?DistrictCode=${DistrictCode}");
 
       final httpResponseBody = dioResponse.toString();
-      final httpResponse =
-      http.Response(httpResponseBody, dioResponse.statusCode ?? 403);
+      final httpResponse = http.Response(httpResponseBody, dioResponse.statusCode ?? 403);
 
       responseJson = returnResponse(httpResponse);
     } on SocketException {

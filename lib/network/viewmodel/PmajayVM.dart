@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -9,13 +10,15 @@ import 'package:provider/provider.dart';
 import '../data/AddCommittee.dart';
 import '../data/SaveCameraLatLong.dart';
 import '../remote/ApiResponse.dart';
+import '../remote/BaseApiService.dart';
+import '../remote/DioUtil.dart';
 import '../repository/MainRepoImp.dart';
 import '../response/BlockListResponse.dart';
+
 import '../response/GramListResponse.dart';
 import '../response/LoginResponse.dart';
 import '../response/VillageListResponse.dart';
-
-
+import 'package:dio/dio.dart' as response; // Import Dio library
 
 
 class PmajayVM extends ChangeNotifier {
@@ -82,12 +85,16 @@ class PmajayVM extends ChangeNotifier {
 
     _setBlockList(ApiResponse.loading());
     _myRepo.getBlockList( BaseUrl,  DistrictCode).then((value) =>
-        _setBlockList(ApiResponse.completed(value)))
+        _setBlockList(ApiResponse.completed(value))
+
+    )
 
         .onError((error, stackTrace) =>
         _setBlockList(ApiResponse.error(error.toString())));
 
   }
+
+
 
   ApiResponse<GramListResponse> gramMain = ApiResponse.loading();
   void _setGramList(ApiResponse<GramListResponse> response)
@@ -127,4 +134,5 @@ class PmajayVM extends ChangeNotifier {
         _setVillageList(ApiResponse.error(error.toString())));
 
   }
+
 }

@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 
 import 'firebase/firebase_options.dart';
 import 'locator.dart';
+import 'network/viewmodel/DropdownNotifier.dart';
 import 'network/viewmodel/PmajayVM.dart';
 
 
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => PmajayVM()),
-
+          ChangeNotifierProvider(create: (_) => DropdownNotifier()),
 
         ],
         child: MaterialApp(
