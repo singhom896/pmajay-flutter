@@ -87,6 +87,28 @@ class NetworkApiService extends BaseApiService {
     return responseJson;
   }
   @override
+  Future getDesignList(String BaseUrl) async {
+    dynamic responseJson;
+    try {
+
+
+      final apiService = DioUtil(baseUrl);
+      Response dioResponse = await apiService.getRequest(
+          "/designation.php");
+
+      final httpResponseBody = dioResponse.toString();
+      final httpResponse = http.Response(httpResponseBody, dioResponse.statusCode ?? 403);
+
+      responseJson = returnResponse(httpResponse);
+    } on SocketException {
+      throw FetchDataException('No Internet Connection');
+    }
+    return responseJson;
+  }
+
+
+
+  @override
   Future getBlockList(String BaseUrl, String DistrictCode) async {
     dynamic responseJson;
     try {

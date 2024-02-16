@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import '../../../../network/data/AddCommittee.dart';
 import '../../../../network/remote/Status.dart';
 import '../../../../network/response/BlockListResponse.dart';
+import '../../../../network/response/DesignationListResponse.dart';
 import '../../../../network/response/GramListResponse.dart';
 import '../../../../network/response/VillageListResponse.dart';
 import '../../../../network/viewmodel/DropdownNotifier.dart';
@@ -137,7 +138,7 @@ class _village_format_i_addState extends State<VillageFormat_I_Add> {
 
     });
     viewmodelListner = Provider.of<PmajayVM>(context, listen: false);
-
+    viewmodelListner.addListener(getdesignation);
     viewmodelListner.addListener(allBlockList);
     viewmodelListner.addListener(allGramList);
     viewmodelListner.addListener(allVillageList);
@@ -146,6 +147,46 @@ class _village_format_i_addState extends State<VillageFormat_I_Add> {
 
 
   }
+  void getdesignation()
+  {
+    if (viewmodelListner.designationMain.status == Status.LOADING) {
+      setState(() {
+        isLoading = true;
+      }); // Update the UI if necessary
+    }
+
+    if (viewmodelListner.designationMain.status == Status.ERROR) {}
+    if (viewmodelListner.designationMain.status == Status.COMPLETED)
+    {
+      if (viewmodelListner.designationMain.data.response.status == true )
+      {
+        setState(() {
+          isLoading = false;
+        }); // Update the UI if necessary
+
+        designationlist.clear();
+        // blocklist.add(BlockResult(BlockCode:'',BlockName:'--Select Block---'));
+        designationlist.addAll(viewmodelListner.designationMain.data.response.dataResult);
+        designationlist.insert(
+          0,
+          DesignationResult(Designation:'--Select Block---'),
+        );
+        designationvalue = designationlist[0];
+
+        viewmodelListner.removeListener(getdesignation);
+        setState(() {
+
+        });
+
+      } else {
+        setState(() {
+          isLoading = false;
+        }); // Update the UI if necessary
+      }
+    }
+  }
+
+
   bool isLoading = true;
 
   Future<void> setDataList() async
@@ -286,9 +327,9 @@ class _village_format_i_addState extends State<VillageFormat_I_Add> {
       }
     }
   }
-
+  late DesignationResult designationvalue;
   late BlockResult selectblockvalue;
-
+  List<DesignationResult> designationlist = [];
   List<BlockResult> blocklist = [];
   List<GramResult> gramlist = [];
   late GramResult selectGramvalue;

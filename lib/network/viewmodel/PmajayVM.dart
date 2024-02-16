@@ -15,6 +15,7 @@ import '../remote/DioUtil.dart';
 import '../repository/MainRepoImp.dart';
 import '../response/BlockListResponse.dart';
 
+import '../response/DesignationListResponse.dart';
 import '../response/GramListResponse.dart';
 import '../response/LoginResponse.dart';
 import '../response/VillageListResponse.dart';
@@ -72,6 +73,31 @@ class PmajayVM extends ChangeNotifier {
         _setUserLogin(ApiResponse.error(error.toString())));
 
   }
+
+
+  ApiResponse<DesignationListResponse> designationMain = ApiResponse.loading();
+  void _setDesigList(ApiResponse<DesignationListResponse> response)
+  {
+    print("TAG :: $response");
+    designationMain = response;
+    notifyListeners();
+  }
+  Future<void>getDesignList(String BaseUrl, String DistrictCode) async
+  {
+
+    _setDesigList(ApiResponse.loading());
+    _myRepo.getDesignList( BaseUrl).then((value) =>
+        _setDesigList(ApiResponse.completed(value))
+
+    )
+
+        .onError((error, stackTrace) =>
+        _setDesigList(ApiResponse.error(error.toString())));
+
+  }
+
+
+
 
   ApiResponse<BlockListResponse> bloackMain = ApiResponse.loading();
   void _setBlockList(ApiResponse<BlockListResponse> response)
