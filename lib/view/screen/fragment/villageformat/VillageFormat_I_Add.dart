@@ -1,26 +1,21 @@
 import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:pmajay/utills/AppString.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../network/data/AddCommittee.dart';
 import '../../../../network/remote/Status.dart';
 import '../../../../network/response/BlockListResponse.dart';
 import '../../../../network/response/DesignationListResponse.dart';
 import '../../../../network/response/GramListResponse.dart';
 import '../../../../network/response/VillageListResponse.dart';
-import '../../../../network/viewmodel/DropdownNotifier.dart';
 import '../../../../network/viewmodel/PmajayVM.dart';
 import '../../../../utills/SharedPreferencesHelper.dart';
-import '../../../widget/DropDownFormField.dart';
 import '../../../widget/DynamicWidgets.dart';
 import '../../../../utills/CustomColor.dart';
 import '../../../../utills/FontSize.dart';
 import '../../../widget/ExpandableTextWidget.dart';
-import '../../../widget/CustomWidget.dart';
 import '../../../widget/ResizableTextView.dart';
 
 class VillageFormat_I_Add extends StatefulWidget {
@@ -50,7 +45,8 @@ class _village_format_i_addState extends State<VillageFormat_I_Add> {
 
   _saveForm() {
     var form = _formKey.currentState;
-    if (form!.validate()) {
+    if (form!.validate())
+    {
       form.save();
       setState(() {
         _myActivityResult = _myActivity;
@@ -142,20 +138,25 @@ class _village_format_i_addState extends State<VillageFormat_I_Add> {
     viewmodelListner.addListener(allBlockList);
     viewmodelListner.addListener(allGramList);
     viewmodelListner.addListener(allVillageList);
-
+    viewmodelListner.getDesignList('');
     viewmodelListner.getBlockList('', DistrictCode!);
 
 
   }
   void getdesignation()
   {
-    if (viewmodelListner.designationMain.status == Status.LOADING) {
+    if (viewmodelListner.designationMain.status == Status.LOADING)
+    {
       setState(() {
         isLoading = true;
       }); // Update the UI if necessary
     }
 
-    if (viewmodelListner.designationMain.status == Status.ERROR) {}
+    if (viewmodelListner.designationMain.status == Status.ERROR) {
+      setState(() {
+        isLoading = false;
+      }); // Update the U
+    }
     if (viewmodelListner.designationMain.status == Status.COMPLETED)
     {
       if (viewmodelListner.designationMain.data.response.status == true )
@@ -169,7 +170,7 @@ class _village_format_i_addState extends State<VillageFormat_I_Add> {
         designationlist.addAll(viewmodelListner.designationMain.data.response.dataResult);
         designationlist.insert(
           0,
-          DesignationResult(Designation:'--Select Block---'),
+          DesignationResult(Designation:'---Select Designation---'),
         );
         designationvalue = designationlist[0];
 
@@ -346,6 +347,8 @@ class _village_format_i_addState extends State<VillageFormat_I_Add> {
     viewmodelListner.removeListener(allBlockList);
     viewmodelListner.removeListener(allGramList);
     viewmodelListner.removeListener(allVillageList);
+    viewmodelListner.removeListener(getdesignation);
+
     super.dispose();
   }
 
@@ -1907,49 +1910,74 @@ class _village_format_i_addState extends State<VillageFormat_I_Add> {
                       ),
                     ),
                     Container(
-                      child: GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () {
-                          setState(() {
-                            clickevent = true;
-                          });
-                        },
-                        child: DropDownFormField(
-                          titleText: 'Designation',
-                          hintText: ' --Select---',
-                          value: select_designation,
-                          onSaved: (value) {
-                            setState(() {
-                              select_designation = value;
-                            });
-                          },
-                          onChanged: (value) {
-                            setState(() {
-                              select_designation = value;
-                            });
-                          },
-                          dataSource: [
-                            {
-                              "display": "--Select Designation---",
-                              "value": "--Select Designation---",
-                            },
-                            {
-                              "display": "AAO",
-                              "value": "AAO",
-                            },
-                            {
-                              "display": "A.N.M",
-                              "value": "A.N.M",
-                            },
-                          ],
-                          textField: 'display',
-                          valueField: 'value',
-                          validator: (value) {},
-                          context: context,
-                          onTabClick: clickevent,
-                        ),
+                      child: Stack(
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.only( top: 9),
+                            height: 65,
+                            child: DropdownButtonFormField(
+                              decoration: InputDecoration(
+                                enabledBorder: OutlineInputBorder( //<-- SEE HERE
+                                  borderSide: BorderSide(color: Colors.green.withOpacity(0.5), width: 2),
+                                ),
+                                focusedBorder: OutlineInputBorder( //<-- SEE HERE
+                                  borderSide: BorderSide(color: CustomColor.drawer_bg.withOpacity(0.5), width: 2),
+                                ),
+                                filled: true,
+                                fillColor: Colors.white,
+                              ),
+                              dropdownColor: Colors.white,
+                              value: designationvalue,
+                              onChanged: (DesignationResult? newValue) {
+                                setState(() {
+
+                                  designationvalue = newValue!;
+                                });
+
+                                if (designationvalue.Designation != '---Select Designation---')
+                                {
+
+                                }
+                                // designationlist
+                                // designationvalue
+
+                              },
+                              items: designationlist.map<DropdownMenuItem<DesignationResult>>((DesignationResult value) {
+                                return DropdownMenuItem<DesignationResult>(
+                                  value: value,
+                                  child: Text(
+                                    value.Designation??"",
+                                    style: TextStyle(fontSize: FontSize.sp_15),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                          Positioned(
+                            left: 10,
+                            top: 3,
+                            child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 3),
+                              color: Colors.white,
+                              child: RichText(
+                                text: TextSpan(
+                                  text: '---Select Designation---',
+                                  style: TextStyle(color: Colors.black),
+                                  /*defining default style is optional */
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: ' *',
+                                        style: TextStyle(fontWeight: FontWeight.bold,color:  Colors.red)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+
+                        ],
                       ),
                     ),
+
                     Container(
                       margin: EdgeInsets.only(top: 5),
                       decoration: BoxDecoration(

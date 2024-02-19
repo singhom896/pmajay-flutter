@@ -82,16 +82,13 @@ class PmajayVM extends ChangeNotifier {
     designationMain = response;
     notifyListeners();
   }
-  Future<void>getDesignList(String BaseUrl, String DistrictCode) async
+  Future<void>getDesignList(String BaseUrl) async
   {
-
     _setDesigList(ApiResponse.loading());
-    _myRepo.getDesignList( BaseUrl).then((value) =>
+    _myRepo.getDesignList(BaseUrl).then((value) =>
         _setDesigList(ApiResponse.completed(value))
 
-    )
-
-        .onError((error, stackTrace) =>
+    ).onError((error, stackTrace) =>
         _setDesigList(ApiResponse.error(error.toString())));
 
   }
